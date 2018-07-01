@@ -133,7 +133,7 @@ public class InsercaoAtividadeBasica {
 				requisicaoDados = "SELECT * FROM aluno WHERE id=?";
 				statementAluno = conexaoBD.prepareStatement(requisicaoDados);
 				statementAluno.setInt(1, rs.getInt("id_aluno"));
-				rsAluno = statement.executeQuery();
+				rsAluno = statementAluno.executeQuery();
 				rsAluno.next();
 
 				usuario.setNome(rsAluno.getString("nome"));
@@ -145,7 +145,7 @@ public class InsercaoAtividadeBasica {
 				usuario.setWhatsapp(rsAluno.getString("whatsapp"));
 
 				dataNascimento = Calendar.getInstance();
-				dataNascimento.setTime(rs.getDate("datanascimento"));
+				dataNascimento.setTime(rsAluno.getDate("datanascimento"));
 				usuario.setDataNascimento(dataNascimento);
 
 				atividade.setUsuario(usuario);

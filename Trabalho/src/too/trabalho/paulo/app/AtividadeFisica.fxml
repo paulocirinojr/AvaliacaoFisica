@@ -153,7 +153,7 @@
                         </GridPane>
                         <HBox alignment="CENTER_LEFT" layoutX="197.0" layoutY="235.0" prefHeight="34.0" prefWidth="144.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Remover" />
+                              <Button mnemonicParsing="false" onAction="#remove" text="Remover" />
                               <Button disable="true" mnemonicParsing="false" text="Atualizar">
                                  <HBox.margin>
                                     <Insets left="5.0" />
@@ -165,36 +165,32 @@
                   </AnchorPane>
                </items>
             </SplitPane>
-            <SplitPane dividerPositions="0.5755677368833203" layoutX="20.0" layoutY="21.0" prefHeight="673.0" prefWidth="1279.0" visible="false">
+            <SplitPane fx:id="edicaoAtividadeBasica" dividerPositions="0.5755677368833203" layoutY="1.0" prefHeight="673.0" prefWidth="1279.0" visible="false">
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0">
                      <children>
-                        <TableView layoutY="1.0" prefHeight="672.0" prefWidth="739.0">
+                        <TableView fx:id="tabelaAtivBasica" layoutY="1.0" onMouseClicked="#obtemAtivBasica" prefHeight="672.0" prefWidth="739.0">
                            <columns>
-                              <TableColumn prefWidth="135.00000762939453" text="Nome" />
-                              <TableColumn prefWidth="76.99999237060547" text="Sexo" />
-                              <TableColumn prefWidth="41.0" text="Altura" />
-                              <TableColumn prefWidth="48.00001525878906" text="Peso" />
-                              <TableColumn prefWidth="116.33334350585938" text="Data Nascimento" />
-                              <TableColumn prefWidth="115.66668701171875" text="E-mail" />
-                              <TableColumn prefWidth="103.33331298828125" text="CPF" />
-                              <TableColumn prefWidth="101.3333740234375" text="Whatsapp" />
+                              <TableColumn fx:id="colAtividade" prefWidth="182.0" text="Atividade" />
+                              <TableColumn fx:id="colTempo" prefWidth="122.0" text="Tempo" />
+                              <TableColumn fx:id="colDuracao" prefWidth="107.0" text="Duração" />
+                              <TableColumn fx:id="colDistancia" prefWidth="112.0" text="Distância" />
+                              <TableColumn fx:id="colCalorias" prefWidth="130.0" text="Calorias" />
+                              <TableColumn fx:id="colPassos" prefWidth="78.0" text="Passos" />
                            </columns>
                         </TableView>
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0">
                      <children>
-                        <GridPane fx:id="gridEdicao2" layoutX="185.0" layoutY="101.0" prefHeight="240.0" prefWidth="176.0">
+                        <GridPane fx:id="gridEdicao22" layoutX="185.0" layoutY="101.0" prefHeight="178.0" prefWidth="176.0">
                            <children>
-                              <TextField promptText="Nome" />
-                              <TextField promptText="Sexo" GridPane.rowIndex="1" />
-                              <TextField promptText="Altura" GridPane.rowIndex="2" />
-                              <TextField promptText="Peso" GridPane.rowIndex="3" />
-                              <TextField promptText="Data de Nascimento" GridPane.rowIndex="4" />
-                              <TextField promptText="E-mail" GridPane.rowIndex="5" />
-                              <TextField promptText="CPF" GridPane.rowIndex="6" />
-                              <TextField promptText="Whatsapp" GridPane.rowIndex="7" />
+                              <TextField fx:id="tfAtividade" promptText="Atividade" />
+                              <TextField fx:id="tfTempo" promptText="Tempo" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfDuracao" promptText="Duração" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfDistancia" promptText="Distância" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfCalorias" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfPassos" promptText="Passos" GridPane.rowIndex="5" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
@@ -206,45 +202,38 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <GridPane fx:id="gridEdicao22" layoutX="185.0" layoutY="101.0" prefHeight="240.0" prefWidth="176.0" visible="false">
+                        <HBox alignment="CENTER" layoutX="185.0" layoutY="290.0" prefHeight="34.0" prefWidth="144.0">
                            <children>
-                              <TextField promptText="Nome" />
-                              <TextField promptText="Sexo" GridPane.rowIndex="1" />
-                              <TextField promptText="Altura" GridPane.rowIndex="2" />
-                              <TextField promptText="Peso" GridPane.rowIndex="3" />
-                              <TextField promptText="Data de Nascimento" GridPane.rowIndex="4" />
-                              <TextField promptText="E-mail" GridPane.rowIndex="5" />
-                              <TextField promptText="CPF" GridPane.rowIndex="6" />
-                              <TextField promptText="Whatsapp" GridPane.rowIndex="7" />
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <HBox alignment="CENTER_LEFT" layoutX="192.0" layoutY="366.0" prefHeight="34.0" prefWidth="144.0">
-                           <children>
-                              <Button mnemonicParsing="false" text="Remover" />
-                              <Button disable="true" mnemonicParsing="false" text="Atualizar">
+                              <Button disable="true" mnemonicParsing="false" onAction="#atualiza" text="Atualizar">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
+                        <GridPane fx:id="gridEdicao221" layoutX="185.0" layoutY="101.0" prefHeight="178.0" prefWidth="176.0" visible="false">
+                           <children>
+                              <TextField fx:id="tfAtividade1" promptText="Atividade" />
+                              <TextField fx:id="tfTempo1" promptText="Tempo" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfDuracao1" promptText="Duração" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfDistancia1" promptText="Distância" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfCalorias1" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfPassos1" promptText="Passos" GridPane.rowIndex="5" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
                      </children>
                   </AnchorPane>
                </items>

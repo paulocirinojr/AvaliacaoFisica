@@ -70,7 +70,8 @@ public class AtividadeFisicaController {
     @FXML
     private HBox iniciaPesquisa, hboxExercicio, relatorioBasico, hboxRelatorioDetalhado, hboxGraficoBasico, hboxGraficoLinha, hboxGraficoCompleto;
     @FXML
-    private TextField campoBuscaCliente, tfPeso, tfNome, tfSexo, tfAltura, tfEmail, tfCPF, tfWpp, tfUser, tfSenha, tfPapel;
+    private TextField campoBuscaCliente, tfPeso, tfNome, tfSexo, tfAltura, tfEmail, tfCPF, tfWpp, tfUser, tfSenha, tfPapel, tfAtividade, tfTempo, tfDuracao,
+    							 tfDistancia, tfCalorias, tfPassos;
     @FXML
     private ChoiceBox<String> escolheExercicio, escolheClienteGraficoBasico, escolheGrafico;
     @FXML
@@ -91,7 +92,7 @@ public class AtividadeFisicaController {
     @FXML
     private AnchorPane telaEdicao;
     @FXML
-    private SplitPane edicaoAluno, edicaoUsuario;
+    private SplitPane edicaoAluno, edicaoUsuario, edicaoAtividadeBasica;
     @FXML
     private Label labelEscolha, totalCaloriasPerdidas, mediaCaloriasPerdidas, distanciaTotal, distanciaMedia, totalPassos;
     @FXML
@@ -99,12 +100,19 @@ public class AtividadeFisicaController {
     @FXML
     private TableView<Usuario> tabelaUsuarios;
     @FXML
+    private TableView<AtividadeBasica> tabelaAtivBasica;
+    @FXML
     private TableColumn<Aluno, Number> pesoAluno, alturaAluno;
     @FXML
     private TableColumn<Aluno, String> nomeAluno, sexoAluno, emailAluno, cpfAluno, wppAluno;
     @FXML
     private TableColumn<Usuario, String> userCol, senhaCol, papelCol;
-
+    @FXML
+    private TableColumn<AtividadeBasica, String> colTempo, colAtividade, colDuracao;
+    @FXML
+    private TableColumn<AtividadeBasica, Float> colCalorias, colDistancia;
+    @FXML
+    private TableColumn<AtividadeBasica, Integer> colPassos;
 
     @FXML
     private void initialize(){
@@ -120,6 +128,12 @@ public class AtividadeFisicaController {
     	senhaCol.setCellValueFactory(new PropertyValueFactory<>("senha"));
     	papelCol.setCellValueFactory(new PropertyValueFactory<>("papel"));
 
+    	colTempo.setCellValueFactory(new PropertyValueFactory<>("tempo"));
+    	colDuracao.setCellValueFactory(new PropertyValueFactory<>("duracao"));
+    	colAtividade.setCellValueFactory(new PropertyValueFactory<>("atividade"));
+    	colDistancia.setCellValueFactory(new PropertyValueFactory<>("distancia"));
+    	colCalorias.setCellValueFactory(new PropertyValueFactory<>("caloriasPerdidas"));
+    	colPassos.setCellValueFactory(new PropertyValueFactory<>("passos"));
 
     }
 
@@ -310,6 +324,10 @@ public class AtividadeFisicaController {
     	hboxGraficoCompleto.setVisible(false);
     	gridEscolhaExercicio.setVisible(false);
     	gridDetalhes.setVisible(false);
+    	telaEdicao.setVisible(false);
+    	edicaoAluno.setVisible(false);
+    	edicaoUsuario.setVisible(false);
+    	edicaoAtividadeBasica.setVisible(false);
 
     } // limpaTela()
 
@@ -544,6 +562,7 @@ public class AtividadeFisicaController {
 
     @FXML
     private void edicaoAlunos() {
+    	limpaTela();
         telaEdicao.setVisible(true);
         edicaoAluno.setVisible(true);
 
@@ -563,18 +582,28 @@ public class AtividadeFisicaController {
         tabelaUsuarios.setItems(listaUsuarios);
 	}
 
+    private void atualizaTabelaAtivBasica() {
+        ObservableList<AtividadeBasica> listaAtividades = FXCollections.observableList(InsercaoAtividadeBasica.listaAtividades(conexaoBD));
+
+        tabelaAtivBasica.setItems(listaAtividades);
+	}
+
 	@FXML
     private void edicaoAtividadeCompleta() {
-
+		limpaTela();
     }
 
     @FXML
     private void edicaoAtividadeBasica() {
-
+    	limpaTela();
+    	telaEdicao.setVisible(true);
+    	edicaoAtividadeBasica.setVisible(true);
+    	atualizaTabelaAtivBasica();
     }
 
     @FXML
     private void edicaoUsers() {
+    	limpaTela();
     	telaEdicao.setVisible(true);
     	edicaoUsuario.setVisible(true);
     	atualizaTabelaUsuarios();
@@ -612,6 +641,25 @@ public class AtividadeFisicaController {
     }
 
     @FXML
+    private void obtemAtivBasica(MouseEvent mouse) {
+    	if (mouse.getButton().equals(MouseButton.PRIMARY)){
+    		if (mouse.getClickCount() == 2 && tabelaAtivBasica.getSelectionModel().getSelectedItem() != null){
+    			AtividadeBasica atividade = tabelaAtivBasica.getSelectionModel().getSelectedItem();
+
+/*    			tfAtividade, tfTempo, tfDuracao,
+				 tfDistancia, tfCalorias, tfPassos;*/
+
+    			tfAtividade.setText(atividade.getExercicio());
+    			tfTempo.setText(atividade.getTempo());
+    			tfDuracao.setText(atividade.getDuracao());
+    			tfDistancia.setText(String.format("%1.2f", atividade.getDistancia()));
+    			tfCalorias.setText(String.format("%1.2f", atividade.getCaloriasPerdidas()));
+    			tfPassos.setText(String.format("%d", atividade.getPassos()));
+    		}
+    	}
+    }
+
+    @FXML
     private void remove(){
     	if (edicaoAluno.isVisible()){
 	    	Aluno aluno = new Aluno();
@@ -623,9 +671,20 @@ public class AtividadeFisicaController {
 	    	atualizaTabelaAlunos();
     	}
     	else{
+    		if (edicaoUsuario.isVisible()){
+    			Usuario usuario = new Usuario();
 
+    			usuario.setUsuario(tfUser.getText());
+
+    			new InsercaoUsuario().remove(usuario, conexaoBD);
+
+    			atualizaTabelaUsuarios();
+    		}
     	}
+    }
 
+    @FXML
+    private void atualiza(){
 
     }
 

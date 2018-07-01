@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.Alert.AlertType;
-import too.trabalho.paulo.classes.Aluno;
 import too.trabalho.paulo.classes.Usuario;
 
 public class InsercaoUsuario {
@@ -58,6 +57,21 @@ public class InsercaoUsuario {
 			e.printStackTrace();
 		}
 		return usersList;
+	}
+
+	public void remove(Usuario usuario, Connection conexao){
+		String sql = "DELETE FROM usuario WHERE usuario=?";
+
+		try {
+
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.setString(1, usuario.getUsuario());
+
+			statement.execute();
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Erro na remoção do usuário do BD.", AlertType.ERROR).showAndWait();
+		}
 	}
 
 }
