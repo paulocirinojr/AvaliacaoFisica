@@ -64,19 +64,19 @@ public class AtividadeFisicaController {
 
 	// Elementos JavaFX.
     @FXML
-    private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio, btnAtualizaAluno, btnRemoveAluno;
+    private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio, btnAtualizaAluno, btnRemoveAluno, btnRemoveUsuario;
     @FXML
-    private GridPane gridImportacao, gridPaneGrafico, gridEscolhaExercicio, gridDetalhes;
+    private GridPane gridImportacao, gridPaneGrafico, gridEscolhaExercicio, gridDetalhes, gridBuscaAluno, gridBuscaAtividade;
     @FXML
     private HBox iniciaPesquisa, hboxExercicio, relatorioBasico, hboxRelatorioDetalhado, hboxGraficoBasico, hboxGraficoLinha, hboxGraficoCompleto;
     @FXML
     private TextField campoBuscaCliente, tfPeso, tfNome, tfSexo, tfAltura, tfEmail, tfCPF, tfWpp, tfUser, tfSenha, tfPapel, tfAtividade, tfTempo, tfDuracao,
     							 tfDistancia, tfCalorias, tfPassos, tfAtividadeC, tfTempoC, tfDuracaoC, tfDistanciaC, tfCaloriasC, tfPassosC, tfVelMed, tfVelMax,
-    							 tfMaiorEl, tfMenorEl;
+    							 tfMaiorEl, tfMenorEl, tfPesquisa, tfPesquisaAtividade;
     @FXML
     private ChoiceBox<String> escolheExercicio, escolheClienteGraficoBasico, escolheGrafico;
     @FXML
-    private TextArea relatorio, relatorioDetalhado;
+    private TextArea relatorio, relatorioDetalhado, tfBusca;
     @FXML
     private NumberAxis distanciaGraficoBasico;
     @FXML
@@ -84,14 +84,14 @@ public class AtividadeFisicaController {
     @FXML
     private TabPane tabGraficos, tabLinhas, tabGraficosCompletos;
     @FXML
-    private DatePicker dataInicial, dataFinal;
+    private DatePicker dataInicial, dataFinal, dataPesquisaInicio, dataPesquisaFinal;
     @FXML
     private SwingNode nodeGraficoDuracao, nodeGraficoDistancia, nodeGraficoCalorias, nodeGraficoPassos, nodeGraficoVelocidade,
     								 nodeGraficoRitmo, nodeGraficoDuracaoCompleto, nodeGraficoDistanciaCompleto, nodeGraficoCaloriasCompleto,
     								 nodeGraficoPassosCompleto, nodeGraficoVelocidadeCompleto, nodeGraficoRitmoCompleto,
     								 nodeLinhaDistancia, nodeLinhaCalorias, nodeLinhaPassos;
     @FXML
-    private AnchorPane telaEdicao;
+    private AnchorPane telaEdicao, telaPesquisa;
     @FXML
     private SplitPane edicaoAluno, edicaoUsuario, edicaoAtividadeBasica, edicaoAtividadeCompleta;
     @FXML
@@ -103,6 +103,8 @@ public class AtividadeFisicaController {
     @FXML
     private TableView<AtividadeBasica> tabelaAtivBasica;
     @FXML
+    private TableView<AtividadeFisica> tabelaPesquisa;
+    @FXML
     private TableView<AtividadeCompleta> tabelaAtivCompleta;
     @FXML
     private TableColumn<Aluno, Number> pesoAluno, alturaAluno;
@@ -110,6 +112,8 @@ public class AtividadeFisicaController {
     private TableColumn<Aluno, String> nomeAluno, sexoAluno, emailAluno, cpfAluno, wppAluno;
     @FXML
     private TableColumn<Usuario, String> userCol, senhaCol, papelCol;
+    @FXML
+    private TableColumn<AtividadeFisica, String> colPesq1, colPesq2;
     @FXML
     private TableColumn<AtividadeBasica, String> colTempo, colAtividade, colDuracao;
     @FXML
@@ -159,6 +163,9 @@ public class AtividadeFisicaController {
     	colVelMax.setCellValueFactory(new PropertyValueFactory<>("velocidadeMaxima"));
     	colMaiorElv.setCellValueFactory(new PropertyValueFactory<>("maiorElevacao"));
     	colMenorElv.setCellValueFactory(new PropertyValueFactory<>("menorElevacao"));
+
+    	colPesq1.setCellValueFactory(new PropertyValueFactory<>("atividade"));
+    	colPesq2.setCellValueFactory(new PropertyValueFactory<>("duracao"));
 
     }
 
@@ -354,6 +361,7 @@ public class AtividadeFisicaController {
     	edicaoUsuario.setVisible(false);
     	edicaoAtividadeBasica.setVisible(false);
 		edicaoAtividadeCompleta.setVisible(false);
+		telaPesquisa.setVisible(false);
 
     } // limpaTela()
 
@@ -674,6 +682,8 @@ public class AtividadeFisicaController {
     			tfSenha.setText(usuario.getSenha());
     			tfPapel.setText(usuario.getPapel());
 
+    			btnRemoveUsuario.setDisable(false);
+
     		}
     	}
     }
@@ -753,6 +763,48 @@ public class AtividadeFisicaController {
 	protected void finalize() throws Throwable {
 		conexaoBD.close();
 		super.finalize();
+	}
+
+	@FXML
+	private void pesquisaAluno(){
+		limpaTela();
+		telaPesquisa.setVisible(true);
+		gridBuscaAluno.setVisible(true);
+	}
+
+	@FXML
+	private void pesquisaAtividade(){
+		limpaTela();
+		telaPesquisa.setVisible(true);
+		gridBuscaAtividade.setVisible(true);
+
+	}
+
+	@FXML
+	private void buscaAluno(){
+		Aluno aluno = new InsercaoAluno().pesquisaAluno(tfPesquisa.getText(), conexaoBD);
+
+		if (aluno != null){
+			tfBusca.setText(aluno.toString());
+			tfBusca.setVisible(true);
+		}
+	}
+
+	@FXML
+	private void buscaAtividade(){
+		tabelaPesquisa.setVisible(true);
+		List<AtividadeBasica> basicList = InsercaoAtividadeBasica.listaAtividadesPorPeriodo(tfPesquisaAtividade.getText(), dataPesquisaInicio.getValue(), dataPesquisaFinal.getValue(), conexaoBD);
+		List<AtividadeCompleta> completaList = InsercaoAtividadeCompleta.listaAtividadesPorPeriodo(tfPesquisaAtividade.getText(), dataPesquisaInicio.getValue(), dataPesquisaFinal.getValue(), conexaoBD);
+		List<AtividadeFisica> atividadesList = new ArrayList<>();
+
+		for (int i = 0 ; i < basicList.size() ; i++)
+			atividadesList.add(basicList.get(i));
+		for (int i = 0 ; i < completaList.size() ; i++)
+			atividadesList.add(completaList.get(i));
+
+		ObservableList<AtividadeFisica> atividades = FXCollections.observableArrayList(atividadesList);
+
+		tabelaPesquisa.setItems(atividades);
 	}
 
 

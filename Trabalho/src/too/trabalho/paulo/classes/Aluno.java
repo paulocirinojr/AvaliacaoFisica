@@ -1,5 +1,6 @@
 package too.trabalho.paulo.classes;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -76,9 +77,11 @@ public class Aluno {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat DN = new SimpleDateFormat("dd/MM/yyyy");
+
 		return String.format("------ Usuário ------\nNome: %s\nSexo: %sAltura: %1.2f m\nPeso: %1.1f Kg\nData de Nascimento: %s\nE-mail: %s"
 				+ "\nCPF: %s\nWhatsapp: %s",
-				nome, sexo, altura, peso, dataNascimento.toString(), email, cpf, whatsapp);
+				nome, sexo, altura, peso, DN.format(dataNascimento.getTime()), email, cpf, whatsapp);
 	}
 
 	public String getCpf() {

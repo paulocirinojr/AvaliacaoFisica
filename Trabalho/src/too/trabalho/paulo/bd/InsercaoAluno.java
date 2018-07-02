@@ -90,5 +90,31 @@ public class InsercaoAluno {
 		}
 	} // remove()
 
+	public Aluno pesquisaAluno (String nome, Connection conexao){
+		Aluno aluno = new Aluno();
+		String sql = "SELECT * FROM aluno WHERE nome=?";
+
+		try {
+			PreparedStatement statement = conexao.prepareStatement(sql);
+			statement.setString(1, nome);
+
+			ResultSet rs = statement.executeQuery();
+
+			rs.next();
+
+			aluno.setNome(rs.getString("nome"));
+			aluno.setAltura(rs.getFloat("altura"));
+			aluno.setCpf(rs.getString("cpf"));
+			aluno.setEmail(rs.getString("email"));
+			aluno.setPeso(rs.getFloat("peso"));
+			aluno.setSexo(rs.getString("sexo"));
+			aluno.setWhatsapp(rs.getString("whatsapp"));
+
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Ocorreu um erro na busca do aluno!", AlertType.ERROR).showAndWait();
+		}
+		return aluno;
+	} // pesquisaAluno()
+
 
 } // class InsercaoAluno

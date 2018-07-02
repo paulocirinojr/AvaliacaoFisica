@@ -739,8 +739,6 @@ public class ManipulaDados {
 			List<Ritmo> ritmosList = InsercaoAtividadeCompleta.listaRitmos(InsercaoAtividadeCompleta.idAtividade(tipo1, conexaoBD), conexaoBD);
 			Ritmo ritmo;
 
-			System.out.println("ritmos = " + ritmosList.size());
-
 			for (int i = 0 ; i < ritmosList.size() ; i++){
 
 				ritmo = ritmosList.get(i);
@@ -948,7 +946,6 @@ public class ManipulaDados {
     				// Formatter utilizado para obter a hora do sistema, que será armazenado no nome do arquivo.
 	    			DateTimeFormatter formater = DateTimeFormatter.ofPattern("hh:mm:ss");
 	    			nomeArquivo = "arquivos" + File.separator + nome + " - rE" + LocalTime.now().format(formater).replace(":", "-") + ".txt";
-	    			System.out.println(nomeArquivo);
 	    			arquivoRelatorio.criar(nomeArquivo);
 	    			arquivoRelatorio.abrir(nomeArquivo);
     			}

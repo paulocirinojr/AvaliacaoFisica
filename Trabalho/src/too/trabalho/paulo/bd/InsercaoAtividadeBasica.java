@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -152,6 +153,87 @@ public class InsercaoAtividadeBasica {
 
 				// Insere a atividade na lista.
 				atividadesList.add(atividade);
+			}
+
+		} catch (SQLException e) {
+			exibeAlerta("ERRO FATAL", "Erro na requisição dos dados no banco !", AlertType.ERROR).showAndWait();
+			e.printStackTrace();
+		}
+		return atividadesList;
+	} // listaAtividades()
+
+	public static List<AtividadeBasica> listaAtividadesPorPeriodo(String exercicio, LocalDate dataInicial, LocalDate dataFinal, Connection conexaoBD){
+		ArrayList<AtividadeBasica> atividadesList = new ArrayList<>();
+		AtividadeBasica atividade;
+		Aluno usuario;
+		String requisicaoDados = "SELECT * FROM atividade_basica";
+		Calendar dataInicialCalendar, dataFinalCalendar;
+
+		try {
+			// Seta o statement a ser utilizado na operação.
+			PreparedStatement statement = conexaoBD.prepareStatement(requisicaoDados), statementAluno;
+			/*O objeto ResultSet recebe os dados requisitados pela operação SELECT do banco de dados.
+			 * O método executeQuery solicita a execução do comando.
+			 */
+			ResultSet rs = statement.executeQuery(), rsAluno;
+
+			dataInicialCalendar = Calendar.getInstance();
+			dataInicialCalendar.set(dataInicial.getYear(), dataInicial.getMonthValue()-1, dataInicial.getDayOfMonth());
+
+			dataFinalCalendar = Calendar.getInstance();
+			dataFinalCalendar.set(dataFinal.getYear(), dataFinal.getMonthValue() - 1, dataFinal.getDayOfMonth());
+
+			// Loop ativo enquanto o ResultSet recebe objetos válidos.
+			while (rs.next()){
+				// Cria os objetos a serem preenchidos.
+				atividade = new AtividadeBasica();
+				usuario = new Aluno();
+
+				atividade.setTempo(rs.getString("tempo"));
+				atividade.setDuracao(rs.getString("duracao"));
+				atividade.setDistancia(rs.getFloat("distancia"));
+				atividade.setCaloriasPerdidas(rs.getFloat("calorias"));
+				atividade.setPassos(rs.getInt("passos"));
+				atividade.setExercicio(rs.getString("atividade"));
+
+				if (exercicio.equalsIgnoreCase(atividade.getExercicio())){
+					System.out.println("Entrou");
+					Calendar dataExercicio = Calendar.getInstance(), dataNascimento;
+					dataExercicio.setTime(rs.getDate("data"));
+
+
+
+
+					if (!dataExercicio.before(dataInicialCalendar) || !dataExercicio.after(dataFinalCalendar)){
+						atividade.setData(dataExercicio);
+
+
+						requisicaoDados = "SELECT * FROM aluno WHERE id=?";
+						statementAluno = conexaoBD.prepareStatement(requisicaoDados);
+						statementAluno.setInt(1, rs.getInt("id_aluno"));
+						rsAluno = statementAluno.executeQuery();
+						rsAluno.next();
+
+						usuario.setNome(rsAluno.getString("nome"));
+						usuario.setSexo(rsAluno.getString("sexo"));
+						usuario.setAltura(rsAluno.getFloat("altura"));
+						usuario.setPeso(rsAluno.getFloat("peso"));
+						usuario.setEmail(rsAluno.getString("email"));
+						usuario.setCpf(rsAluno.getString("cpf"));
+						usuario.setWhatsapp(rsAluno.getString("whatsapp"));
+
+						dataNascimento = Calendar.getInstance();
+						dataNascimento.setTime(rsAluno.getDate("datanascimento"));
+						usuario.setDataNascimento(dataNascimento);
+
+						atividade.setUsuario(usuario);
+
+						// Insere a atividade na lista.
+						atividadesList.add(atividade);
+					}
+				}
+				else
+					continue;
 			}
 
 		} catch (SQLException e) {
