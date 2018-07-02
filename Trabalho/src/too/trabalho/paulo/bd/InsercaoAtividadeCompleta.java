@@ -207,6 +207,8 @@ public class InsercaoAtividadeCompleta {
 				atividade.setMaiorElevacao(rs.getFloat("maior_elevacao"));
 				atividade.setMenorElevacao(rs.getFloat("menor_elevacao"));
 				atividade.setPassos(rs.getInt("passos"));
+				atividade.setVelocidadeMaxima(rs.getFloat("velocidade_maxima"));
+				atividade.setVelocidadeMedia(rs.getFloat("velocidade_media"));
 
 				String ritmo = rs.getString("ritmo_medio");
 				String min, seg;

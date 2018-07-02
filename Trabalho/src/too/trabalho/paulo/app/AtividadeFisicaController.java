@@ -64,14 +64,15 @@ public class AtividadeFisicaController {
 
 	// Elementos JavaFX.
     @FXML
-    private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio;
+    private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio, btnAtualizaAluno, btnRemoveAluno;
     @FXML
     private GridPane gridImportacao, gridPaneGrafico, gridEscolhaExercicio, gridDetalhes;
     @FXML
     private HBox iniciaPesquisa, hboxExercicio, relatorioBasico, hboxRelatorioDetalhado, hboxGraficoBasico, hboxGraficoLinha, hboxGraficoCompleto;
     @FXML
     private TextField campoBuscaCliente, tfPeso, tfNome, tfSexo, tfAltura, tfEmail, tfCPF, tfWpp, tfUser, tfSenha, tfPapel, tfAtividade, tfTempo, tfDuracao,
-    							 tfDistancia, tfCalorias, tfPassos;
+    							 tfDistancia, tfCalorias, tfPassos, tfAtividadeC, tfTempoC, tfDuracaoC, tfDistanciaC, tfCaloriasC, tfPassosC, tfVelMed, tfVelMax,
+    							 tfMaiorEl, tfMenorEl;
     @FXML
     private ChoiceBox<String> escolheExercicio, escolheClienteGraficoBasico, escolheGrafico;
     @FXML
@@ -92,7 +93,7 @@ public class AtividadeFisicaController {
     @FXML
     private AnchorPane telaEdicao;
     @FXML
-    private SplitPane edicaoAluno, edicaoUsuario, edicaoAtividadeBasica;
+    private SplitPane edicaoAluno, edicaoUsuario, edicaoAtividadeBasica, edicaoAtividadeCompleta;
     @FXML
     private Label labelEscolha, totalCaloriasPerdidas, mediaCaloriasPerdidas, distanciaTotal, distanciaMedia, totalPassos;
     @FXML
@@ -101,6 +102,8 @@ public class AtividadeFisicaController {
     private TableView<Usuario> tabelaUsuarios;
     @FXML
     private TableView<AtividadeBasica> tabelaAtivBasica;
+    @FXML
+    private TableView<AtividadeCompleta> tabelaAtivCompleta;
     @FXML
     private TableColumn<Aluno, Number> pesoAluno, alturaAluno;
     @FXML
@@ -113,6 +116,17 @@ public class AtividadeFisicaController {
     private TableColumn<AtividadeBasica, Float> colCalorias, colDistancia;
     @FXML
     private TableColumn<AtividadeBasica, Integer> colPassos;
+    @FXML
+    private TableColumn<AtividadeCompleta, String> colAtividadeCompleta, colTempoCompleta, colDuracaoCompleta;
+    @FXML
+    private TableColumn<AtividadeCompleta, Float> colCaloriasCompleta, colDistanciaCompleta;
+    @FXML
+    private TableColumn<AtividadeCompleta, Integer> colPassosCompleta;
+    @FXML
+    private TableColumn<AtividadeCompleta, Float> colVelMed, colVelMax;
+    @FXML
+    private TableColumn<AtividadeCompleta, Double> colMaiorElv, colMenorElv;
+
 
     @FXML
     private void initialize(){
@@ -134,6 +148,17 @@ public class AtividadeFisicaController {
     	colDistancia.setCellValueFactory(new PropertyValueFactory<>("distancia"));
     	colCalorias.setCellValueFactory(new PropertyValueFactory<>("caloriasPerdidas"));
     	colPassos.setCellValueFactory(new PropertyValueFactory<>("passos"));
+
+    	colAtividadeCompleta.setCellValueFactory(new PropertyValueFactory<>("atividade"));
+    	colTempoCompleta.setCellValueFactory(new PropertyValueFactory<>("tempo"));
+    	colDuracaoCompleta.setCellValueFactory(new PropertyValueFactory<>("duracao"));
+    	colCaloriasCompleta.setCellValueFactory(new PropertyValueFactory<>("caloriasPerdidas"));
+    	colDistanciaCompleta.setCellValueFactory(new PropertyValueFactory<>("distancia"));
+    	colPassosCompleta.setCellValueFactory(new PropertyValueFactory<>("passos"));
+    	colVelMed.setCellValueFactory(new PropertyValueFactory<>("velocidadeMedia"));
+    	colVelMax.setCellValueFactory(new PropertyValueFactory<>("velocidadeMaxima"));
+    	colMaiorElv.setCellValueFactory(new PropertyValueFactory<>("maiorElevacao"));
+    	colMenorElv.setCellValueFactory(new PropertyValueFactory<>("menorElevacao"));
 
     }
 
@@ -328,6 +353,7 @@ public class AtividadeFisicaController {
     	edicaoAluno.setVisible(false);
     	edicaoUsuario.setVisible(false);
     	edicaoAtividadeBasica.setVisible(false);
+		edicaoAtividadeCompleta.setVisible(false);
 
     } // limpaTela()
 
@@ -588,9 +614,18 @@ public class AtividadeFisicaController {
         tabelaAtivBasica.setItems(listaAtividades);
 	}
 
+    private void atualizaTabelaAtivCompleta() {
+        ObservableList<AtividadeCompleta> listaAtividades = FXCollections.observableList(InsercaoAtividadeCompleta.listaAtividades(conexaoBD));
+
+        tabelaAtivCompleta.setItems(listaAtividades);
+	}
+
 	@FXML
     private void edicaoAtividadeCompleta() {
-		limpaTela();
+    	limpaTela();
+    	telaEdicao.setVisible(true);
+		edicaoAtividadeCompleta.setVisible(true);
+		atualizaTabelaAtivCompleta();
     }
 
     @FXML
@@ -622,6 +657,9 @@ public class AtividadeFisicaController {
     			tfEmail.setText(aluno.getEmail());
     			tfCPF.setText(aluno.getCpf());
     			tfWpp.setText(aluno.getWhatsapp());
+
+    			btnRemoveAluno.setDisable(false);
+    			btnAtualizaAluno.setDisable(false);
     		}
     	}
     }
@@ -646,15 +684,34 @@ public class AtividadeFisicaController {
     		if (mouse.getClickCount() == 2 && tabelaAtivBasica.getSelectionModel().getSelectedItem() != null){
     			AtividadeBasica atividade = tabelaAtivBasica.getSelectionModel().getSelectedItem();
 
-/*    			tfAtividade, tfTempo, tfDuracao,
-				 tfDistancia, tfCalorias, tfPassos;*/
-
     			tfAtividade.setText(atividade.getExercicio());
     			tfTempo.setText(atividade.getTempo());
     			tfDuracao.setText(atividade.getDuracao());
     			tfDistancia.setText(String.format("%1.2f", atividade.getDistancia()));
     			tfCalorias.setText(String.format("%1.2f", atividade.getCaloriasPerdidas()));
     			tfPassos.setText(String.format("%d", atividade.getPassos()));
+    		}
+    	}
+    }
+
+    @FXML
+    private void obtemAtivCompleta(MouseEvent mouse) {
+    	if (mouse.getButton().equals(MouseButton.PRIMARY)){
+    		if (mouse.getClickCount() == 2 && tabelaAtivCompleta.getSelectionModel().getSelectedItem() != null){
+    			AtividadeCompleta atividade = tabelaAtivCompleta.getSelectionModel().getSelectedItem();
+
+    			tfAtividadeC.setText(atividade.getExercicio());
+    			tfTempoC.setText(atividade.getTempo());
+    			tfDuracaoC.setText(atividade.getDuracao());
+    			tfDistanciaC.setText(String.format("%1.2f", atividade.getDistancia()));
+    			tfCaloriasC.setText(String.format("%1.2f", atividade.getCaloriasPerdidas()));
+    			tfPassosC.setText(String.format("%d", atividade.getPassos()));
+    			tfVelMed.setText(String.format("%1.2f", atividade.getVelocidadeMedia()));
+    			tfVelMax.setText(String.format("%1.2f", atividade.getVelocidadeMaxima()));
+    			tfMaiorEl.setText(String.format("%1.2f", atividade.getMaiorElevacao()));
+    			tfMenorEl.setText(String.format("%1.2f", atividade.getMenorElevacao()));
+
+
     		}
     	}
     }

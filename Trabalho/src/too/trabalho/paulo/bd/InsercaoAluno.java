@@ -87,7 +87,6 @@ public class InsercaoAluno {
 		} catch (SQLException e) {
 			exibeAlerta("ERRO", "Erro na remoção do aluno! Verifique se o mesmo está sendo utilizado em alguma atividade"
 					+ " cadastrada. As IDs de aluno fazem parte da chave primária das atividades.", AlertType.ERROR).showAndWait();
-			e.printStackTrace();
 		}
 	} // remove()
 
