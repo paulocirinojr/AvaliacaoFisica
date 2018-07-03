@@ -456,6 +456,108 @@ public class InsercaoAtividadeCompleta {
 		return atividadesList;
 	} // listaAtividades()
 
+	public static List<AtividadeCompleta> listaAtividadesPorCliente(String nome, LocalDate dataInicial, LocalDate dataFinal, Connection conexaoBD){
+		ArrayList<AtividadeCompleta> atividadesList = new ArrayList<>();
+		AtividadeCompleta atividade;
+		Aluno usuario = null;
+		SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+		String requisicaoDados = "SELECT * FROM atividade_completa WHERE id_aluno=?",
+					requisicaoAluno = "SELECT * FROM aluno WHERE nome=?";
+		Calendar dataInicialCalendar, dataFinalCalendar;
+
+		try {
+			// Seta o statement a ser utilizado na operação.
+			PreparedStatement statementAluno = conexaoBD.prepareStatement(requisicaoAluno),
+											   statement = conexaoBD.prepareStatement(requisicaoDados);
+
+			statementAluno.setString(1, nome);
+
+			/*O objeto ResultSet recebe os dados requisitados pela operação SELECT do banco de dados.
+			 * O método executeQuery solicita a execução do comando.
+			 */
+			ResultSet rs = statementAluno.executeQuery();
+
+			if (rs.next()){
+				usuario = new Aluno();
+
+				// Altera cada dado do objeto com base nos resultados da busca no BD.
+				usuario.setNome(rs.getString("nome"));
+				usuario.setSexo(rs.getString("sexo"));
+				usuario.setAltura(rs.getFloat("altura"));
+				usuario.setPeso(rs.getFloat("peso"));
+				Calendar dataNasc = Calendar.getInstance();
+				dataNasc.setTime(rs.getDate("datanascimento"));
+				usuario.setDataNascimento(dataNasc);
+				usuario.setEmail(rs.getString("email"));
+				usuario.setCpf(rs.getString("cpf"));
+				usuario.setWhatsapp(rs.getString("whatsapp"));
+
+				statement.setInt(1, rs.getInt("id"));
+				rs.close();
+
+				rs = statement.executeQuery();
+			}
+
+
+			dataInicialCalendar = Calendar.getInstance();
+			dataInicialCalendar.set(dataInicial.getYear(), dataInicial.getMonthValue()-1, dataInicial.getDayOfMonth());
+
+			dataFinalCalendar = Calendar.getInstance();
+			dataFinalCalendar.set(dataFinal.getYear(), dataFinal.getMonthValue() - 1, dataFinal.getDayOfMonth());
+
+
+			// Loop ativo enquanto o ResultSet recebe objetos válidos.
+			while (rs.next()){
+				// Cria os objetos a serem preenchidos.
+				atividade = new AtividadeCompleta();
+
+				atividade.setUsuario(usuario);
+
+				Calendar dataEx = Calendar.getInstance();
+				data.format(rs.getDate("data"));
+				Date date = new Date(data.getCalendar().getTimeInMillis());
+				dataEx.setTime(date);
+
+				if (!dataEx.before(dataInicialCalendar) || !dataEx.after(dataFinalCalendar)){
+					atividade.setData(dataEx);
+					atividade.setTempo(rs.getString("tempo"));
+					atividade.setDuracao(rs.getString("duracao"));
+					atividade.setDistancia(rs.getFloat("distancia"));
+					atividade.setCaloriasPerdidas(rs.getFloat("calorias"));
+					atividade.setPassos(rs.getInt("passos"));
+					atividade.setVelocidadeMedia(rs.getFloat("velocidade_media"));
+					atividade.setVelocidadeMaxima(rs.getFloat("velocidade_maxima"));
+					atividade.setMenorElevacao(rs.getFloat("menor_elevacao"));
+					atividade.setMaiorElevacao(rs.getFloat("maior_elevacao"));
+					atividade.setExercicio(rs.getString("atividade"));
+
+					String ritmo = rs.getString("ritmo_medio");
+					String min, seg;
+
+					min = ritmo.substring(0,ritmo.indexOf(":"));
+					seg = ritmo.substring(ritmo.indexOf(":")+1,ritmo.length());
+
+					LocalTime time = LocalTime.of(0, Integer.parseInt(min), Integer.parseInt(seg));
+
+					atividade.setRitmoMedio(time);
+
+					ritmo = rs.getString("ritmo_maximo");
+					min = ritmo.substring(0,ritmo.indexOf(":"));
+					seg = ritmo.substring(ritmo.indexOf(":")+1,ritmo.length());
+
+					time = LocalTime.of(0, Integer.parseInt(min), Integer.parseInt(seg));
+
+					// Adiciona o objeto na lista de atividades.
+					atividadesList.add(atividade);
+				}
+			}
+		} catch (SQLException e) {
+			exibeAlerta("ERRO FATAL", "Erro na requisição dos dados no banco !", AlertType.ERROR).showAndWait();
+			e.printStackTrace();
+		}
+		return atividadesList;
+	} // listaAtividades()
+
 	/**
 	 * Obtém a ID do exercício de acordo com a chaves primárias <code>email, data e tempo</code>.
 	 * @param atividade Objeto onde serão obtidas as chaves de busca.

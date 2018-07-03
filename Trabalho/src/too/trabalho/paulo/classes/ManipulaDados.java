@@ -26,6 +26,9 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
@@ -1200,7 +1203,7 @@ public class ManipulaDados {
 	 * @return grafico Retorna o objeto <code>JFreeChart</code> gerado.
 	 *
 	 */
-	public static JFreeChart geraGraficos(int tipoGrafico, String nomeExercicio, List<AtividadeFisica> atividadesList, Label[] linhas){
+	/*public static JFreeChart geraGraficos(int tipoGrafico, String nomeExercicio, List<AtividadeFisica> atividadesList, Label[] linhas){
 		ManipulaDados manipulacao = new ManipulaDados();
 		AtividadeFisica atividade = null;
 		SimpleDateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
@@ -1219,9 +1222,9 @@ public class ManipulaDados {
 			atividade = atividadesList.get(i);
 			exercicio = atividade.getExercicio();
 
-			/* Verifica se o nome do exercício é o mesmo recebido como parâmetro ou se a variável verificador é true.
+			 Verifica se o nome do exercício é o mesmo recebido como parâmetro ou se a variável verificador é true.
 			 * A variável verificador é utilizada para criação dos gráficos 10-15.
-			 */
+
 			if (atividade.getExercicio().equalsIgnoreCase(nomeExercicio) || verificador){
 				data = formatadorData.format(atividade.getData().getTime());
 
@@ -1285,9 +1288,9 @@ public class ManipulaDados {
 						distanciaMedia = distanciaTotal / atividadesList.size();
 						mediaCalorias = totalCalorias / atividadesList.size();
 
-						/* Após a realização de todos os cálculos, o valor do for é reiniciado e a variável verificador é setada como true,
+						 Após a realização de todos os cálculos, o valor do for é reiniciado e a variável verificador é setada como true,
 						 * autorizando a criação dos gráficos.
-						 */
+
 						i = -1;
 						verificador = true;
 
@@ -1367,6 +1370,207 @@ public class ManipulaDados {
 
 		return grafico;
 } // geraGraficos()
+*/
+
+
+	public static void preencheGrafico(int tipoGrafico, BarChart<String, Number> grafico, Connection conexaoBD, LocalDate dataInicial, LocalDate dataFinal, String nomeCliente, Label[] linhas){
+		List<AtividadeCompleta> atividadesList1 = InsercaoAtividadeCompleta.listaAtividadesPorCliente(nomeCliente, conexaoBD);
+		List<AtividadeBasica> atividadesList2 = InsercaoAtividadeBasica.listaAtividadesPorCliente(nomeCliente, conexaoBD);
+		Calendar dataInicialCalendar, dataFinalCalendar;
+		AtividadeFisica atividade = null;
+    	XYChart.Series<String, Number> exercicio;
+		XYChart.Data<String, Number> dados;
+		SimpleDateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+		ManipulaDados manipulacao = new ManipulaDados();
+		boolean verificador = false;
+		int totalPassos = 0;
+		double distanciaMedia, distanciaTotal, mediaCalorias, totalCalorias;
+		distanciaMedia = distanciaTotal = mediaCalorias = totalCalorias = 0;
+
+		grafico.getData().clear();
+
+		dataInicialCalendar = Calendar.getInstance();
+		dataInicialCalendar.set(dataInicial.getYear(), dataInicial.getMonthValue()-1, dataInicial.getDayOfMonth());
+
+		dataFinalCalendar = Calendar.getInstance();
+		dataFinalCalendar.set(dataFinal.getYear(), dataFinal.getMonthValue() - 1, dataFinal.getDayOfMonth());
+
+		List<AtividadeFisica> atividadesList = new ArrayList<>();
+
+		for (int i = 0 ; i < atividadesList1.size() ; i++){
+			atividade = atividadesList1.get(i);
+			if (!atividade.getData().before(dataInicialCalendar) || !atividade.getData().after(dataFinalCalendar))
+				atividadesList.add(atividade);
+		}
+
+
+		for (int i = 0 ; i < atividadesList2.size() ; i++){
+			atividade = atividadesList2.get(i);
+			if (!atividade.getData().before(dataInicialCalendar) || !atividade.getData().after(dataFinalCalendar))
+				atividadesList.add(atividadesList2.get(i));
+		}
+
+		for (int i = 0 ; i < atividadesList.size() ; i ++){
+			if (tipoGrafico <=6 ||  verificador){
+				dados = new XYChart.Data<>();
+				exercicio = new XYChart.Series<>();
+				atividade = atividadesList.get(i);
+
+				exercicio.setName(atividade.getExercicio());
+
+				if (atividade instanceof AtividadeCompleta){
+					AtividadeCompleta tipo1 = (AtividadeCompleta) atividade;
+					exercicio.setName(tipo1.getExercicio());
+					if (tipoGrafico == 5)
+						dados.setYValue(tipo1.getVelocidadeMedia());
+					else
+						if (tipoGrafico == 6){
+							dados.setYValue(manipulacao.getRitmoMedio(tipo1.getRitmoMedio()));
+						}
+				}
+
+				dados.setXValue(formatadorData.format(atividade.getData().getTime()));
+
+				switch (tipoGrafico) {
+				case 1:
+					dados.setYValue(manipulacao.getMinutosDuracao(atividade.getDuracao()));
+					break;
+				case 2:
+					dados.setYValue(atividade.getDistancia());
+					break;
+				case 3:
+					dados.setYValue(atividade.getCaloriasPerdidas());
+					break;
+				case 4:
+					dados.setYValue(atividade.getPassos());
+					break;
+				}
+
+				exercicio.getData().add(dados);
+				grafico.getData().add(exercicio);
+
+		}
+		else{
+			// Procedimentos utilizados para geração do gráfico completo.
+			if (tipoGrafico > 9){
+				totalPassos += atividade.getPassos();
+				distanciaTotal += atividade.getDistancia();
+				totalCalorias += atividade.getCaloriasPerdidas();
+
+				if ( i == atividadesList.size() - 1){
+					distanciaMedia = distanciaTotal / atividadesList.size();
+					mediaCalorias = totalCalorias / atividadesList.size();
+
+					 /*Após a realização de todos os cálculos, o valor do for é reiniciado e a variável verificador é setada como true,
+					 * autorizando a criação dos gráficos.*/
+
+					i = -1;
+					verificador = true;
+
+					switch (tipoGrafico) {
+					case 10:
+						tipoGrafico = 1;
+						break;
+					case 11:
+						tipoGrafico = 2;
+						break;
+					case 12:
+						tipoGrafico = 3;
+						break;
+					case 13:
+						tipoGrafico = 4;
+						break;
+					case 14:
+						tipoGrafico = 5;
+						break;
+					case 15:
+						tipoGrafico = 6;
+						break;
+					}
+				}
+
+				// Altera os labels do gráfico.
+				linhas[0].setText(String.format("%1.2f Kcal", totalCalorias));
+				linhas[1].setText(String.format("%1.2f Kcal", mediaCalorias));
+				linhas[2].setText(String.format("%1.2f Km", distanciaTotal));
+				linhas[3].setText(String.format("%1.2f", distanciaMedia));
+				linhas[4].setText(String.format("%d", totalPassos));
+			}
+		}
+		}
+
+	} // preencheGrafico()
+
+public static void preencheGrafico(int tipoGrafico, LineChart<String, Number> grafico, Connection conexaoBD, LocalDate dataInicial, LocalDate dataFinal, String nomeCliente){
+	List<AtividadeCompleta> atividadesList1 = InsercaoAtividadeCompleta.listaAtividadesPorCliente(nomeCliente, conexaoBD);
+	List<AtividadeBasica> atividadesList2 = InsercaoAtividadeBasica.listaAtividadesPorCliente(nomeCliente, conexaoBD);
+	Calendar dataInicialCalendar, dataFinalCalendar;
+	AtividadeFisica atividade;
+	XYChart.Series<String, Number> exercicio;
+	XYChart.Data<String, Number> dados;
+	SimpleDateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+	ManipulaDados manipulacao = new ManipulaDados();
+
+	grafico.getData().clear();
+
+	dataInicialCalendar = Calendar.getInstance();
+	dataInicialCalendar.set(dataInicial.getYear(), dataInicial.getMonthValue()-1, dataInicial.getDayOfMonth());
+
+	dataFinalCalendar = Calendar.getInstance();
+	dataFinalCalendar.set(dataFinal.getYear(), dataFinal.getMonthValue() - 1, dataFinal.getDayOfMonth());
+
+	List<AtividadeFisica> atividadesList = new ArrayList<>();
+
+	for (int i = 0 ; i < atividadesList1.size() ; i++){
+		atividade = atividadesList1.get(i);
+		if (!atividade.getData().before(dataInicialCalendar) || !atividade.getData().after(dataFinalCalendar))
+			atividadesList.add(atividade);
+	}
+
+
+	for (int i = 0 ; i < atividadesList2.size() ; i++){
+		atividade = atividadesList2.get(i);
+		if (!atividade.getData().before(dataInicialCalendar) || !atividade.getData().after(dataFinalCalendar))
+			atividadesList.add(atividadesList2.get(i));
+	}
+
+	for (int i = 0 ; i < atividadesList.size() ; i ++){
+		dados = new XYChart.Data<>();
+		exercicio = new XYChart.Series<>();
+
+		atividade = atividadesList.get(i);
+
+		exercicio.setName(atividade.getExercicio());
+
+		if (atividade instanceof AtividadeCompleta){
+			AtividadeCompleta tipo1 = (AtividadeCompleta) atividade;
+			exercicio.setName(tipo1.getExercicio());
+			if (tipoGrafico == 5)
+				dados.setYValue(tipo1.getVelocidadeMedia());
+			else
+				if (tipoGrafico == 6){
+					dados.setYValue(manipulacao.getRitmoMedio(tipo1.getRitmoMedio()));
+				}
+		}
+
+		dados.setXValue(formatadorData.format(atividade.getData().getTime()));
+
+		switch (tipoGrafico) {
+		case 1:
+			dados.setYValue(atividade.getDistancia());
+			break;
+		case 2:
+			dados.setYValue(atividade.getCaloriasPerdidas());
+			break;
+		case 3:
+			dados.setYValue(atividade.getPassos());
+			break;
+		}
+
+		exercicio.getData().add(dados);
+		grafico.getData().add(exercicio);
+		}
+	} // preencheGrafico()
 
 	/**
 	 * Percorre uma lista de atividades. Utilizado para preencher o componente ChoiceBox.

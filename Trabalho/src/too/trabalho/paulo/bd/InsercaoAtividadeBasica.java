@@ -201,9 +201,6 @@ public class InsercaoAtividadeBasica {
 					Calendar dataExercicio = Calendar.getInstance(), dataNascimento;
 					dataExercicio.setTime(rs.getDate("data"));
 
-
-
-
 					if (!dataExercicio.before(dataInicialCalendar) || !dataExercicio.after(dataFinalCalendar)){
 						atividade.setData(dataExercicio);
 
@@ -311,6 +308,85 @@ public class InsercaoAtividadeBasica {
 
 				// Insere a atividade na lista.
 				atividadesList.add(atividade);
+			}
+
+		} catch (SQLException e) {
+			exibeAlerta("ERRO FATAL", "Erro na requisição dos dados no banco !", AlertType.ERROR).showAndWait();
+			e.printStackTrace();
+		}
+		return atividadesList;
+	} // listaAtividadesPorCliente()
+
+	public static List<AtividadeBasica> listaAtividadesPorCliente(String nome, LocalDate dataInicial, LocalDate dataFinal, Connection conexaoBD){
+		ArrayList<AtividadeBasica> atividadesList = new ArrayList<>();
+		AtividadeBasica atividade;
+		Aluno usuario = null;
+		int idAluno;
+		String requisicaoDados = "SELECT * FROM atividade_basica WHERE id_aluno=?",
+				requisicaoAluno = "SELECT * FROM aluno WHERE nome=?";
+		Calendar dataInicialCalendar, dataFinalCalendar;
+
+		try {
+			// Seta o statement a ser utilizado na operação.
+			PreparedStatement statementAluno = conexaoBD.prepareStatement(requisicaoAluno),
+					   statement = conexaoBD.prepareStatement(requisicaoDados);
+
+			statementAluno.setString(1, nome);
+
+			/*O objeto ResultSet recebe os dados requisitados pela operação SELECT do banco de dados.
+			 * O método executeQuery solicita a execução do comando.
+			 */
+			ResultSet rs = statementAluno.executeQuery();
+
+			dataInicialCalendar = Calendar.getInstance();
+			dataInicialCalendar.set(dataInicial.getYear(), dataInicial.getMonthValue()-1, dataInicial.getDayOfMonth());
+
+			dataFinalCalendar = Calendar.getInstance();
+			dataFinalCalendar.set(dataFinal.getYear(), dataFinal.getMonthValue() - 1, dataFinal.getDayOfMonth());
+
+			if (rs.next()){
+				usuario = new Aluno();
+
+				// Altera cada dado do objeto com base nos resultados da busca no BD.
+				usuario.setNome(rs.getString("nome"));
+				usuario.setSexo(rs.getString("sexo"));
+				usuario.setAltura(rs.getFloat("altura"));
+				usuario.setPeso(rs.getFloat("peso"));
+				Calendar dataNasc = Calendar.getInstance();
+				dataNasc.setTime(rs.getDate("datanascimento"));
+				usuario.setDataNascimento(dataNasc);
+				usuario.setEmail(rs.getString("email"));
+				usuario.setCpf(rs.getString("cpf"));
+				usuario.setWhatsapp(rs.getString("whatsapp"));
+
+				idAluno = rs.getInt("id");
+				statement.setInt(1, idAluno);
+				rs.close();
+
+				rs = statement.executeQuery();
+			}
+
+			// Loop ativo enquanto o ResultSet recebe objetos válidos.
+			while (rs.next()){
+				// Cria os objetos a serem preenchidos.
+				atividade = new AtividadeBasica();
+
+				atividade.setTempo(rs.getString("tempo"));
+				atividade.setDuracao(rs.getString("duracao"));
+				atividade.setDistancia(rs.getFloat("distancia"));
+				atividade.setCaloriasPerdidas(rs.getFloat("calorias"));
+				atividade.setPassos(rs.getInt("passos"));
+				atividade.setExercicio(rs.getString("atividade"));
+
+				Calendar dataExercicio = Calendar.getInstance();
+				dataExercicio.setTime(rs.getDate("data"));
+
+				if (!dataExercicio.before(dataInicialCalendar) || !dataExercicio.after(dataFinalCalendar)){
+					atividade.setData(dataExercicio);
+					atividade.setUsuario(usuario);
+					// Insere a atividade na lista.
+					atividadesList.add(atividade);
+				}
 			}
 
 		} catch (SQLException e) {

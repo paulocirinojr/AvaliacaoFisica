@@ -3,6 +3,7 @@ package too.trabalho.paulo.app;
 import static too.trabalho.paulo.classes.ManipulaDados.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,9 +13,13 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -48,8 +53,6 @@ import too.trabalho.paulo.classes.AtividadeCompleta;
 import too.trabalho.paulo.classes.Aluno;
 import too.trabalho.paulo.classes.AtividadeBasica;
 
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 
 /**
  * Classe utilizada para controlar todas as ações da interface gráfica.
@@ -66,15 +69,15 @@ public class AtividadeFisicaController {
     @FXML
     private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio, btnAtualizaAluno, btnRemoveAluno, btnRemoveUsuario;
     @FXML
-    private GridPane gridImportacao, gridPaneGrafico, gridEscolhaExercicio, gridDetalhes, gridBuscaAluno, gridBuscaAtividade;
+    private GridPane gridImportacao, gridPaneGrafico, gridDetalhes, gridBuscaAluno, gridBuscaAtividade, gridBuscaAtividadeAluno;
     @FXML
     private HBox iniciaPesquisa, hboxExercicio, relatorioBasico, hboxRelatorioDetalhado, hboxGraficoBasico, hboxGraficoLinha, hboxGraficoCompleto;
     @FXML
     private TextField campoBuscaCliente, tfPeso, tfNome, tfSexo, tfAltura, tfEmail, tfCPF, tfWpp, tfUser, tfSenha, tfPapel, tfAtividade, tfTempo, tfDuracao,
     							 tfDistancia, tfCalorias, tfPassos, tfAtividadeC, tfTempoC, tfDuracaoC, tfDistanciaC, tfCaloriasC, tfPassosC, tfVelMed, tfVelMax,
-    							 tfMaiorEl, tfMenorEl, tfPesquisa, tfPesquisaAtividade;
+    							 tfMaiorEl, tfMenorEl, tfPesquisa, tfPesquisaAtividade, tfPesquisaAtividadeAluno;
     @FXML
-    private ChoiceBox<String> escolheExercicio, escolheClienteGraficoBasico, escolheGrafico;
+    private ChoiceBox<String> escolheExercicio, escolheClienteGraficoBasico;
     @FXML
     private TextArea relatorio, relatorioDetalhado, tfBusca;
     @FXML
@@ -84,18 +87,13 @@ public class AtividadeFisicaController {
     @FXML
     private TabPane tabGraficos, tabLinhas, tabGraficosCompletos;
     @FXML
-    private DatePicker dataInicial, dataFinal, dataPesquisaInicio, dataPesquisaFinal;
-    @FXML
-    private SwingNode nodeGraficoDuracao, nodeGraficoDistancia, nodeGraficoCalorias, nodeGraficoPassos, nodeGraficoVelocidade,
-    								 nodeGraficoRitmo, nodeGraficoDuracaoCompleto, nodeGraficoDistanciaCompleto, nodeGraficoCaloriasCompleto,
-    								 nodeGraficoPassosCompleto, nodeGraficoVelocidadeCompleto, nodeGraficoRitmoCompleto,
-    								 nodeLinhaDistancia, nodeLinhaCalorias, nodeLinhaPassos;
+    private DatePicker dataInicial, dataFinal, dataPesquisaInicio, dataPesquisaFinal, dataAtividadeInicio, dataAtividadeFinal;
     @FXML
     private AnchorPane telaEdicao, telaPesquisa;
     @FXML
     private SplitPane edicaoAluno, edicaoUsuario, edicaoAtividadeBasica, edicaoAtividadeCompleta;
     @FXML
-    private Label labelEscolha, totalCaloriasPerdidas, mediaCaloriasPerdidas, distanciaTotal, distanciaMedia, totalPassos;
+    private Label totalCaloriasPerdidas, mediaCaloriasPerdidas, distanciaTotal, distanciaMedia, totalPassos;
     @FXML
     private TableView<Aluno> tabelaAlunos;
     @FXML
@@ -130,6 +128,12 @@ public class AtividadeFisicaController {
     private TableColumn<AtividadeCompleta, Float> colVelMed, colVelMax;
     @FXML
     private TableColumn<AtividadeCompleta, Double> colMaiorElv, colMenorElv;
+    @FXML
+    private BarChart<String, Number> graficoColunasDuracao, graficoColunasDistancia, graficoColunasCalorias, graficoColunasPassos, graficoColunasVelocidade, graficoColunasRitmo,
+    															graficoColunasRitmoCompleto, graficoColunasDuracaoCompleto, graficoColunasDistanciaCompleto, graficoColunasCaloriasCompleto,
+    															graficoColunasPassosCompleto, graficoColunasVelocidadeCompleto;
+    @FXML
+    private LineChart<String, Number> graficoLinhaDistancia, graficoLinhaCalorias, graficoLinhaPassos;
 
 
     @FXML
@@ -354,7 +358,6 @@ public class AtividadeFisicaController {
     	hboxGraficoBasico.setVisible(false);
     	hboxGraficoLinha.setVisible(false);
     	hboxGraficoCompleto.setVisible(false);
-    	gridEscolhaExercicio.setVisible(false);
     	gridDetalhes.setVisible(false);
     	telaEdicao.setVisible(false);
     	edicaoAluno.setVisible(false);
@@ -435,16 +438,6 @@ public class AtividadeFisicaController {
     private void aplicaPeriodo() {
     	// Obtém o nome do cliente com base no ChoiceBox.
     	String nomeCliente = escolheClienteGraficoBasico.getValue();
-    	gridEscolhaExercicio.setVisible(true);
-
-    	if (hboxGraficoCompleto.isVisible()){
-    		escolheGrafico.setVisible(false);
-    		labelEscolha.setVisible(false);
-    	}
-    	else{
-    		escolheGrafico.setVisible(true);
-    		labelEscolha.setVisible(true);
-    	}
 
     	// Preenche as listas de acordo com o nome do cliente.
     	atividadesList1 = InsercaoAtividadeCompleta.listaAtividadesPorCliente(nomeCliente, conexaoBD);
@@ -454,10 +447,6 @@ public class AtividadeFisicaController {
 		if (dataInicial.getValue() != null && dataFinal.getValue() != null){
 			exercicios = listaAtividadesPeriodo(atividadesList1, atividadesList2, dataInicial.getValue(), dataFinal.getValue());
 			relatorioList = listaAtividades(atividadesList1, atividadesList2);
-			escolheGrafico.getItems().clear();
-
-			// Insere os exercícios no ChoiceBox.
-			escolheGrafico.getItems().addAll(exercicios);
 		}
     } // aplicaPeriodo()
 
@@ -477,46 +466,31 @@ public class AtividadeFisicaController {
      */
     @FXML
     private void gerarGraficos() {
-    	String exercicio = escolheGrafico.getValue();
-    	ChartPanel graficoPane;
-    	JFreeChart grafico;
-
-    	if (relatorioList != null){
-	    	// Ordena a lista de atividades por data.
-	    	relatorioList.sort(new Comparator<AtividadeFisica>() {
-
-				@Override
-				public int compare(AtividadeFisica o1, AtividadeFisica o2) {
-					return o1.getData().compareTo(o2.getData());
-				}
-			});
+    	String nomeCliente = escolheClienteGraficoBasico.getValue();
 
 	    	// Verifica qual o gráfico está ativo no momento.
 	    	if (hboxGraficoBasico.isVisible() || hboxGraficoLinha.isVisible()){
 	    		if (hboxGraficoBasico.isVisible()){
 	    			// Gera os gráficos de acordo com a escolha do usuário.
 		        	for (int i = 0 ; i < NUMERO_GRAFICOS - 3 ; i++){
-		        		grafico = geraGraficos(i+1, exercicio, relatorioList, null);
-		    	    	graficoPane = new ChartPanel(grafico);
-		    	    	// Altera o conteúdo do SwingNode.
 		    	    	switch (i + 1) {
 		    			case 1:
-		    				nodeGraficoDuracao.setContent(graficoPane);
+		    				preencheGrafico(i+1, graficoColunasDuracao, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 2:
-		    				nodeGraficoDistancia.setContent(graficoPane);
+		    				preencheGrafico(i+1, graficoColunasDistancia, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 3:
-		    				nodeGraficoCalorias.setContent(graficoPane);
+		    				preencheGrafico(i+1, graficoColunasCalorias, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 4:
-		    				nodeGraficoPassos.setContent(graficoPane);
+		    				preencheGrafico(i+1, graficoColunasPassos, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 5:
-		    				nodeGraficoVelocidade.setContent(graficoPane);
+		    				preencheGrafico(i+1, graficoColunasVelocidade, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 6:
-		    				nodeGraficoRitmo.setContent(graficoPane);
+		    				preencheGrafico(i+1, graficoColunasRitmo, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    	    	}
 		        	}
@@ -524,20 +498,16 @@ public class AtividadeFisicaController {
 	    		}
 	    		else{
 	    			if (hboxGraficoLinha.isVisible()){
-		    			for (int i = 7 ; i <= NUMERO_GRAFICOS ; i++){
-			        		grafico = geraGraficos(i, exercicio, relatorioList, null);
-			    	    	graficoPane = new ChartPanel(grafico);
-			    	    	// Altera o conteúdo do SwingNode.
-
-			    	    	switch (i) {
-				    			case 7:
-				    				nodeLinhaDistancia.setContent(graficoPane);
+		    			for (int i = 0 ; i < 3 ; i++){
+			    	    	switch (i+1) {
+				    			case 1:
+				    				preencheGrafico(i+1, graficoLinhaDistancia, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente);
 				    				break;
-				    			case 8:
-				    				nodeLinhaCalorias.setContent(graficoPane);
+				    			case 2:
+				    				preencheGrafico(i+1, graficoLinhaCalorias, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente);
 				    				break;
-				    			case 9:
-				    				nodeLinhaPassos.setContent(graficoPane);
+				    			case 3:
+				    				preencheGrafico(i+1, graficoLinhaPassos, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente);
 				    				break;
 			    	    	}
 		    			}
@@ -552,38 +522,34 @@ public class AtividadeFisicaController {
 						Label[] linhas = {totalCaloriasPerdidas, mediaCaloriasPerdidas, distanciaTotal, distanciaMedia, totalPassos};
 
 						for (int i = 0 ; i < NUMERO_GRAFICOS_COMPLETOS ; i++){
-							graficoPane = new ChartPanel(geraGraficos(i+NUMERO_GRAFICOS+1, exercicio, relatorioList, linhas));
-
 							// Altera o conteúdo do SwingNode.
 			    	    	switch (i + NUMERO_GRAFICOS + 1) {
 			    			case 10:
-			    				nodeGraficoDuracaoCompleto.setContent(graficoPane);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 11:
-			    				nodeGraficoDistanciaCompleto.setContent(graficoPane);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 12:
-			    				nodeGraficoCaloriasCompleto.setContent(graficoPane);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 13:
-			    				nodeGraficoPassosCompleto.setContent(graficoPane);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 14:
-			    				nodeGraficoVelocidadeCompleto.setContent(graficoPane);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 15:
-			    				nodeGraficoRitmoCompleto.setContent(graficoPane);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    	    	}
 			    	    	tabGraficosCompletos.setVisible(true);
 						}
 					}
-			    }
-    	}
     	else{
     		exibeAlerta("ERRO", "Erro na geração do gráfico. Verifique os dados antes de prosseguir...", AlertType.ERROR).showAndWait();
     	}
-
+			    }
     } // gerarGrafico()
 
     /**
@@ -721,7 +687,6 @@ public class AtividadeFisicaController {
     			tfMaiorEl.setText(String.format("%1.2f", atividade.getMaiorElevacao()));
     			tfMenorEl.setText(String.format("%1.2f", atividade.getMenorElevacao()));
 
-
     		}
     	}
     }
@@ -806,6 +771,55 @@ public class AtividadeFisicaController {
 
 		tabelaPesquisa.setItems(atividades);
 	}
+
+    @FXML
+    private void obtemAtivBusca(MouseEvent mouse) {
+    	if (mouse.getButton().equals(MouseButton.PRIMARY)){
+    		if (mouse.getClickCount() == 2 && tabelaPesquisa.getSelectionModel().getSelectedItem() != null){
+    			AtividadeFisica atividade = tabelaPesquisa.getSelectionModel().getSelectedItem();
+
+    			System.out.println(obtemRelatorioExercicio(atividade, conexaoBD));
+
+	    		try{
+	    					FXMLLoader loader = new FXMLLoader();
+	    					loader.setLocation(getClass().getResource("Pesquisa.fxml"));
+		    				Parent pesquisa = loader.load();
+		    				PesquisaController janela = loader.getController();
+		    				janela.setRelatorio(obtemRelatorioExercicio(atividade, conexaoBD));
+		    				Scene scene = new Scene(pesquisa,600,400);
+		    				Stage janelaPesquisa = new Stage();
+		    				janelaPesquisa.setScene(scene);
+		    				janelaPesquisa.show();
+		    	} catch (IOException e) {
+		    		e.printStackTrace();
+				}
+    		}
+    	}
+    } // obtemAtivBusca()
+
+    @FXML
+    private void pesquisaAtividadeAluno(){
+    	limpaTela();
+		telaPesquisa.setVisible(true);
+		gridBuscaAtividadeAluno.setVisible(true);
+    }
+    @FXML
+    private void buscaAtividadeAluno(){
+
+    	List<AtividadeBasica> basicList = InsercaoAtividadeBasica.listaAtividadesPorCliente(tfPesquisaAtividadeAluno.getText(), dataAtividadeInicio.getValue(), dataAtividadeFinal.getValue(), conexaoBD);
+		List<AtividadeCompleta> completaList = InsercaoAtividadeCompleta.listaAtividadesPorCliente(tfPesquisaAtividadeAluno.getText(), dataAtividadeInicio.getValue(), dataAtividadeFinal.getValue(), conexaoBD);
+		List<AtividadeFisica> atividadesList = new ArrayList<>();
+
+		for (int i = 0 ; i < basicList.size() ; i++)
+			atividadesList.add(basicList.get(i));
+		for (int i = 0 ; i < completaList.size() ; i++)
+			atividadesList.add(completaList.get(i));
+
+		ObservableList<AtividadeFisica> atividades = FXCollections.observableArrayList(atividadesList);
+
+		tabelaPesquisa.setItems(atividades);
+		tabelaPesquisa.setVisible(true);
+    }
 
 
 

@@ -61,12 +61,37 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <TableView fx:id="tabelaPesquisa" layoutX="117.0" layoutY="197.0" prefHeight="473.0" prefWidth="918.0" visible="false">
+            <TableView fx:id="tabelaPesquisa" layoutX="117.0" layoutY="197.0" onMouseClicked="#obtemAtivBusca" prefHeight="473.0" prefWidth="918.0" visible="false">
               <columns>
                 <TableColumn fx:id="colPesq1" prefWidth="75.0" text="Atividade" />
                 <TableColumn fx:id="colPesq2" prefWidth="75.0" text="Duração" />
               </columns>
             </TableView>
+            <GridPane fx:id="gridBuscaAtividadeAluno" layoutX="340.0" layoutY="49.0" prefHeight="113.0" prefWidth="317.0" visible="false">
+               <children>
+                  <Label text="Digite o nome do aluno: ">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="tfPesquisaAtividadeAluno" promptText="Aluno" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#buscaAtividadeAluno" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="dataAtividadeInicio" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="dataAtividadeFinal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Início: " GridPane.rowIndex="1" />
+                  <Label text="Final: " GridPane.rowIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="telaEdicao" layoutY="23.0" prefHeight="679.0" prefWidth="1280.0" visible="false">
@@ -389,16 +414,30 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoDuracao" />
+                              <BarChart fx:id="graficoColunasDuracao" prefHeight="463.0" prefWidth="685.0" title="Duração do Exercício">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Duração (min)" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab text="Distãncia">
+                <Tab text="Distância">
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoDistancia" />
+                              <BarChart fx:id="graficoColunasDistancia" prefHeight="463.0" prefWidth="685.0" title="Distância Percorrida">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Distância" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -407,7 +446,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoCalorias" />
+                              <BarChart fx:id="graficoColunasCalorias" prefHeight="463.0" prefWidth="685.0" title="Calorias Perdidas">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Calorias" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -416,7 +462,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoPassos" />
+                              <BarChart fx:id="graficoColunasPassos" prefHeight="463.0" prefWidth="685.0" title="Total de Passos">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Passos" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -425,7 +478,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoVelocidade" />
+                              <BarChart fx:id="graficoColunasVelocidade" prefHeight="463.0" prefWidth="685.0" title="Velocidade">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Velocidade (Km)" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -434,7 +494,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoRitmo" />
+                              <BarChart fx:id="graficoColunasRitmo" title="Ritmo">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Ritmos" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -475,6 +542,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#pesquisaAluno" text="Pesquisar alunos" />
                   <MenuItem mnemonicParsing="false" onAction="#pesquisaAtividade" text="Pesquisar atividades" />
+                  <MenuItem mnemonicParsing="false" onAction="#pesquisaAtividadeAluno" text="Pesquisar atividades de um aluno" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">
@@ -484,9 +552,9 @@
                </items></Menu>
             <Menu mnemonicParsing="false" text="Gráficos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Gráfico Básico" />
-                  <MenuItem mnemonicParsing="false" text="Gráfico de Linhas" />
-                  <MenuItem mnemonicParsing="false" text="Gráfico Completo" />
+                  <MenuItem mnemonicParsing="false" onAction="#graficoColunasBasico" text="Gráfico Básico" />
+                  <MenuItem mnemonicParsing="false" onAction="#graficoLinhas" text="Gráfico de Linhas" />
+                  <MenuItem mnemonicParsing="false" onAction="#graficoColunasCompleto" text="Gráfico Completo" />
                </items></Menu>
         </menus>
       </MenuBar>
@@ -558,7 +626,7 @@
         </rowConstraints>
          <children>
             <ChoiceBox fx:id="escolheClienteGraficoBasico" prefHeight="25.0" prefWidth="405.0" GridPane.columnSpan="3" />
-            <Button mnemonicParsing="false" onMouseClicked="#aplicaPeriodo" prefHeight="25.0" prefWidth="133.0" text="Aplicar Período" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#gerarGraficos" prefHeight="25.0" prefWidth="133.0" text="Aplicar Período" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -585,7 +653,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeLinhaDistancia" />
+                              <LineChart fx:id="graficoLinhaDistancia" prefHeight="463.0" prefWidth="685.0" title="Distância Percorrida">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Distância" side="LEFT" />
+                                </yAxis>
+                              </LineChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -594,7 +669,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeLinhaCalorias" />
+                              <LineChart fx:id="graficoLinhaCalorias" prefHeight="463.0" prefWidth="685.0" title="Calorias Perdidas">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Calorias" side="LEFT" />
+                                </yAxis>
+                              </LineChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -603,7 +685,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeLinhaPassos" />
+                              <LineChart fx:id="graficoLinhaPassos" prefHeight="463.0" prefWidth="685.0" title="Total de Passos">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Passos" side="LEFT" />
+                                </yAxis>
+                              </LineChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -612,29 +701,6 @@
             </TabPane>
          </children>
       </HBox>
-      <GridPane fx:id="gridEscolhaExercicio" layoutX="145.0" layoutY="134.0" prefHeight="45.0" prefWidth="576.0" visible="false">
-        <columnConstraints>
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button mnemonicParsing="false" onAction="#gerarGraficos" prefHeight="25.0" prefWidth="82.0" text="Gerar" GridPane.columnIndex="2" />
-            <ChoiceBox fx:id="escolheGrafico" prefHeight="25.0" prefWidth="178.0" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </ChoiceBox>
-            <Label fx:id="labelEscolha" alignment="CENTER" text="Selecione o exercício:">
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin>
-            </Label>
-         </children>
-      </GridPane>
       <HBox fx:id="hboxGraficoCompleto" alignment="CENTER" layoutX="54.0" layoutY="199.0" prefHeight="488.0" prefWidth="900.0" visible="false">
          <children>
             <TabPane fx:id="tabGraficosCompletos" prefHeight="435.0" prefWidth="685.0" tabClosingPolicy="UNAVAILABLE" visible="false">
@@ -643,7 +709,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoDuracaoCompleto" />
+                              <BarChart fx:id="graficoColunasDuracaoCompleto" title="Duração do Exercício">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Duração (min.)" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -652,7 +725,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoDistanciaCompleto" />
+                              <BarChart fx:id="graficoColunasDistanciaCompleto" title="Distância Percorrida">
+                                <xAxis>
+                                  <CategoryAxis label="Distância" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Data" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -661,7 +741,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoCaloriasCompleto" />
+                              <BarChart fx:id="graficoColunasCaloriasCompleto" title="Calorias Perdidas">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Calorias" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -670,7 +757,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoPassosCompleto" />
+                              <BarChart fx:id="graficoColunasPassosCompleto" title="Total de Passos">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Passos" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -679,7 +773,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoVelocidadeCompleto" />
+                              <BarChart fx:id="graficoColunasVelocidadeCompleto" title="Velocidade">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Velocidade (Km.)" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
@@ -688,7 +789,14 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="nodeGraficoRitmoCompleto" />
+                              <BarChart fx:id="graficoColunasRitmoCompleto" title="Ritmo">
+                                <xAxis>
+                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis label="Ritmo" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
                            </children>
                         </AnchorPane>
                      </content>
