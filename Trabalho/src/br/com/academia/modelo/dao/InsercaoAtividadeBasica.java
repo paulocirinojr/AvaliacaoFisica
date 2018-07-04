@@ -397,4 +397,30 @@ public class InsercaoAtividadeBasica {
 		return atividadesList;
 	} // listaAtividadesPorCliente()
 
+	public boolean atualiza(AtividadeBasica atividadeAntiga, AtividadeBasica atividadeNova, Connection conexao){
+		String sql = "UPDATE atividade_basica SET tempo=?, atividade=?, duracao=?, distancia=?, calorias=?, passos=?"
+						+	" WHERE atividade=? AND tempo=? AND duracao=?";
+
+		try {
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.setString(1, atividadeNova.getTempo());
+			statement.setString(2, atividadeNova.getExercicio());
+			statement.setString(3, atividadeNova.getDuracao());
+			statement.setFloat(4, atividadeNova.getDistancia());
+			statement.setFloat(5, atividadeNova.getCaloriasPerdidas());
+			statement.setInt(6, atividadeNova.getPassos());
+			statement.setString(7, atividadeAntiga.getExercicio());
+			statement.setString(8, atividadeAntiga.getTempo());
+			statement.setString(9, atividadeAntiga.getDuracao());
+
+			statement.execute();
+
+			return true;
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Erro na atualização da atividade no BD!", AlertType.ERROR).showAndWait();
+		}
+		return false;
+	}
+
 } // class InsercaoAtividade2

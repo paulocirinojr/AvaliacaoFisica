@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.academia.controle.AtividadeFisicaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #4ABDAC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.academia.controle.AtividadeFisicaController">
    <children>
-      <AnchorPane fx:id="telaPesquisa" layoutX="1.0" layoutY="27.0" prefHeight="671.0" prefWidth="1280.0">
+      <AnchorPane fx:id="telaPesquisa" layoutX="1.0" layoutY="27.0" prefHeight="671.0" prefWidth="1280.0" style="-fx-background-color: #4ABDAC;">
          <children>
             <GridPane fx:id="gridBuscaAluno" layoutX="320.0" layoutY="29.0" prefHeight="90.0" prefWidth="317.0" visible="false">
               <columnConstraints>
@@ -31,11 +31,11 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfPesquisa" promptText="Nome" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#buscaAluno" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfPesquisa" promptText="Nome" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#buscaAluno" style="-fx-background-color: #F7B733;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <TextArea fx:id="tfBusca" editable="false" layoutX="211.0" layoutY="108.0" prefHeight="463.0" prefWidth="582.0" visible="false" />
+            <TextArea fx:id="tfBusca" editable="false" layoutX="211.0" layoutY="108.0" prefHeight="463.0" prefWidth="582.0" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" visible="false" />
             <GridPane fx:id="gridBuscaAtividade" layoutX="330.0" layoutY="39.0" prefHeight="113.0" prefWidth="317.0" visible="false">
                <children>
                   <Label text="Digite o nome da atividade">
@@ -43,10 +43,10 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfPesquisaAtividade" promptText="Atividade" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#buscaAtividade" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <DatePicker fx:id="dataPesquisaInicio" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <DatePicker fx:id="dataPesquisaFinal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="tfPesquisaAtividade" promptText="Atividade" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#buscaAtividade" style="-fx-background-color: #F7B733;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="dataPesquisaInicio" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="dataPesquisaFinal" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Início: " GridPane.rowIndex="1" />
                   <Label text="Final: " GridPane.rowIndex="2" />
                </children>
@@ -74,10 +74,10 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfPesquisaAtividadeAluno" promptText="Aluno" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#buscaAtividadeAluno" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <DatePicker fx:id="dataAtividadeInicio" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <DatePicker fx:id="dataAtividadeFinal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="tfPesquisaAtividadeAluno" promptText="Aluno" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#buscaAtividadeAluno" style="-fx-background-color: #F7B733;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="dataAtividadeInicio" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="dataAtividadeFinal" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Início: " GridPane.rowIndex="1" />
                   <Label text="Final: " GridPane.rowIndex="2" />
                </children>
@@ -94,11 +94,11 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="telaEdicao" layoutY="23.0" prefHeight="679.0" prefWidth="1280.0" visible="false">
+      <AnchorPane fx:id="telaEdicao" layoutY="23.0" prefHeight="679.0" prefWidth="1280.0" style="-fx-background-color: #4ABDAC;" visible="false">
          <children>
             <SplitPane fx:id="edicaoAluno" dividerPositions="0.5755677368833203" layoutY="1.0" prefHeight="673.0" prefWidth="1279.0" visible="false">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <TableView fx:id="tabelaAlunos" layoutY="1.0" onMouseClicked="#obtemAlunoTabela" prefHeight="672.0" prefWidth="739.0">
                           <columns>
@@ -113,7 +113,7 @@
                         </TableView>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <GridPane fx:id="gridEdicao" layoutX="185.0" layoutY="101.0" prefHeight="240.0" prefWidth="176.0">
                           <columnConstraints>
@@ -129,25 +129,34 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TextField fx:id="tfNome" promptText="Nome" />
-                              <TextField fx:id="tfSexo" promptText="Sexo" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfAltura" promptText="Altura" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfPeso" promptText="Peso" GridPane.rowIndex="3" />
-                              <TextField fx:id="tfEmail" promptText="E-mail" GridPane.rowIndex="4" />
-                              <TextField fx:id="tfCPF" promptText="CPF" GridPane.rowIndex="5" />
-                              <TextField fx:id="tfWpp" promptText="Whatsapp" GridPane.rowIndex="6" />
+                              <TextField fx:id="tfNome" promptText="Nome" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" />
+                              <TextField fx:id="tfSexo" promptText="Sexo" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfAltura" promptText="Altura" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfPeso" promptText="Peso" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfEmail" promptText="E-mail" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfCPF" promptText="CPF" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfWpp" promptText="Whatsapp" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="6" />
                            </children>
                         </GridPane>
-                        <GridPane fx:id="gridEdicao2" layoutX="185.0" layoutY="101.0" prefHeight="240.0" prefWidth="176.0" visible="false">
+                        <HBox alignment="CENTER_LEFT" layoutX="192.0" layoutY="366.0" prefHeight="34.0" prefWidth="144.0">
                            <children>
-                              <TextField promptText="Nome" />
-                              <TextField promptText="Sexo" GridPane.rowIndex="1" />
-                              <TextField promptText="Altura" GridPane.rowIndex="2" />
-                              <TextField promptText="Peso" GridPane.rowIndex="3" />
-                              <TextField promptText="Data de Nascimento" GridPane.rowIndex="4" />
-                              <TextField promptText="E-mail" GridPane.rowIndex="5" />
-                              <TextField promptText="CPF" GridPane.rowIndex="6" />
-                              <TextField promptText="Whatsapp" GridPane.rowIndex="7" />
+                              <Button fx:id="btnRemoveAluno" disable="true" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #F7B733;" text="Remover" />
+                              <Button fx:id="btnAtualizaAluno" disable="true" mnemonicParsing="false" onAction="#atualiza" style="-fx-background-color: #F7B733;" text="Atualizar">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <GridPane fx:id="gridEdicao2" layoutX="195.0" layoutY="111.0" prefHeight="240.0" prefWidth="176.0" visible="false">
+                           <children>
+                              <TextField fx:id="tfNome2" promptText="Nome" />
+                              <TextField fx:id="tfSexo2" promptText="Sexo" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfAltura2" promptText="Altura" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfPeso2" promptText="Peso" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfEmail2" promptText="E-mail" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfCPF2" promptText="CPF" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfWpp2" promptText="Whatsapp" GridPane.rowIndex="6" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
@@ -160,26 +169,15 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <HBox alignment="CENTER_LEFT" layoutX="192.0" layoutY="366.0" prefHeight="34.0" prefWidth="144.0">
-                           <children>
-                              <Button fx:id="btnRemoveAluno" disable="true" mnemonicParsing="false" onAction="#remove" text="Remover" />
-                              <Button fx:id="btnAtualizaAluno" disable="true" mnemonicParsing="false" text="Atualizar">
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
                      </children>
                   </AnchorPane>
               </items>
             </SplitPane>
             <SplitPane fx:id="edicaoUsuario" dividerPositions="0.5755677368833203" layoutY="1.0" prefHeight="673.0" prefWidth="1279.0" visible="false">
                <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <TableView fx:id="tabelaUsuarios" layoutY="1.0" onMouseClicked="#obtemUsuarioTabela" prefHeight="672.0" prefWidth="739.0">
                            <columns>
@@ -190,43 +188,18 @@
                         </TableView>
                      </children>
                   </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <GridPane fx:id="gridEdicao1" layoutX="185.0" layoutY="101.0" prefHeight="113.0" prefWidth="176.0">
                            <children>
-                              <TextField fx:id="tfUser" promptText="Usuário" />
-                              <TextField fx:id="tfSenha" promptText="Senha" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfPapel" promptText="Papel" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfUser" promptText="Usuário" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" />
+                              <TextField fx:id="tfSenha" promptText="Senha" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfPapel" promptText="Papel" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="2" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="gridEdicao21" layoutX="185.0" layoutY="101.0" prefHeight="240.0" prefWidth="176.0" visible="false">
-                           <children>
-                              <TextField promptText="Nome" />
-                              <TextField promptText="Sexo" GridPane.rowIndex="1" />
-                              <TextField promptText="Altura" GridPane.rowIndex="2" />
-                              <TextField promptText="Peso" GridPane.rowIndex="3" />
-                              <TextField promptText="Data de Nascimento" GridPane.rowIndex="4" />
-                              <TextField promptText="E-mail" GridPane.rowIndex="5" />
-                              <TextField promptText="CPF" GridPane.rowIndex="6" />
-                              <TextField promptText="Whatsapp" GridPane.rowIndex="7" />
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -234,21 +207,36 @@
                         </GridPane>
                         <HBox alignment="CENTER_LEFT" layoutX="197.0" layoutY="235.0" prefHeight="34.0" prefWidth="144.0">
                            <children>
-                              <Button fx:id="btnRemoveUsuario" disable="true" mnemonicParsing="false" onAction="#remove" text="Remover" />
-                              <Button disable="true" mnemonicParsing="false" text="Atualizar">
+                              <Button fx:id="btnRemoveUsuario" disable="true" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #F7B733;" text="Remover" />
+                              <Button fx:id="btnAtualizaUser" disable="true" mnemonicParsing="false" onAction="#atualiza" style="-fx-background-color: #F7B733;" text="Atualizar">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
+                        <GridPane fx:id="gridEdicao11" layoutX="195.0" layoutY="111.0" prefHeight="113.0" prefWidth="176.0" visible="false">
+                           <children>
+                              <TextField fx:id="tfUser2" promptText="Usuário" />
+                              <TextField fx:id="tfSenha2" promptText="Senha" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfPapel2" promptText="Papel" GridPane.rowIndex="2" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
                      </children>
                   </AnchorPane>
                </items>
             </SplitPane>
             <SplitPane fx:id="edicaoAtividadeBasica" dividerPositions="0.5755677368833203" layoutY="1.0" prefHeight="673.0" prefWidth="1279.0" visible="false">
                <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <TableView fx:id="tabelaAtivBasica" layoutY="1.0" onMouseClicked="#obtemAtivBasica" prefHeight="672.0" prefWidth="739.0">
                            <columns>
@@ -262,16 +250,16 @@
                         </TableView>
                      </children>
                   </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="808.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <GridPane fx:id="gridEdicao22" layoutX="185.0" layoutY="101.0" prefHeight="178.0" prefWidth="176.0">
                            <children>
-                              <TextField fx:id="tfAtividade" promptText="Atividade" />
-                              <TextField fx:id="tfTempo" promptText="Tempo" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfDuracao" promptText="Duração" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfDistancia" promptText="Distância" GridPane.rowIndex="3" />
-                              <TextField fx:id="tfCalorias" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
-                              <TextField fx:id="tfPassos" promptText="Passos" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfAtividade" promptText="Atividade" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" />
+                              <TextField fx:id="tfTempo" promptText="Tempo" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfDuracao" promptText="Duração" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfDistancia" promptText="Distância" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfCalorias" promptText="Calorias Perdidas" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfPassos" promptText="Passos" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="5" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
@@ -287,21 +275,21 @@
                         </GridPane>
                         <HBox alignment="CENTER" layoutX="185.0" layoutY="290.0" prefHeight="34.0" prefWidth="144.0">
                            <children>
-                              <Button disable="true" mnemonicParsing="false" onAction="#atualiza" text="Atualizar">
+                              <Button fx:id="btnAttAtB" disable="true" mnemonicParsing="false" onAction="#atualiza" style="-fx-background-color: #F7B733;" text="Atualizar">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
-                        <GridPane fx:id="gridEdicao221" layoutX="185.0" layoutY="101.0" prefHeight="178.0" prefWidth="176.0" visible="false">
+                        <GridPane fx:id="gridEdicao222" layoutX="195.0" layoutY="111.0" prefHeight="178.0" prefWidth="176.0" visible="false">
                            <children>
-                              <TextField fx:id="tfAtividade1" promptText="Atividade" />
-                              <TextField fx:id="tfTempo1" promptText="Tempo" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfDuracao1" promptText="Duração" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfDistancia1" promptText="Distância" GridPane.rowIndex="3" />
-                              <TextField fx:id="tfCalorias1" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
-                              <TextField fx:id="tfPassos1" promptText="Passos" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfAtividade2" promptText="Atividade" />
+                              <TextField fx:id="tfTempo2" promptText="Tempo" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfDuracao2" promptText="Duração" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfDistancia2" promptText="Distância" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfCalorias2" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfPassos2" promptText="Passos" GridPane.rowIndex="5" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
@@ -321,7 +309,7 @@
             </SplitPane>
             <SplitPane fx:id="edicaoAtividadeCompleta" dividerPositions="0.6397807361002349" layoutY="1.0" prefHeight="673.0" prefWidth="1279.0" visible="false">
                <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="470.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <TableView fx:id="tabelaAtivCompleta" layoutY="1.0" onMouseClicked="#obtemAtivCompleta" prefHeight="672.0" prefWidth="840.0">
                            <columns>
@@ -339,20 +327,20 @@
                         </TableView>
                      </children>
                   </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="526.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="526.0" style="-fx-background-color: #4ABDAC;">
                      <children>
                         <GridPane fx:id="gridEdicao221" layoutX="151.0" layoutY="101.0" prefHeight="294.0" prefWidth="155.0">
                            <children>
-                              <TextField fx:id="tfAtividadeC" promptText="Atividade" />
-                              <TextField fx:id="tfTempoC" promptText="Tempo" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfDuracaoC" promptText="Duração" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfDistanciaC" promptText="Distância" GridPane.rowIndex="3" />
-                              <TextField fx:id="tfCaloriasC" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
-                              <TextField fx:id="tfPassosC" promptText="Passos" GridPane.rowIndex="5" />
-                              <TextField fx:id="tfVelMed" promptText="Velocidade Média" GridPane.rowIndex="6" />
-                              <TextField fx:id="tfVelMax" promptText="Velocidade Máxima" GridPane.rowIndex="7" />
-                              <TextField fx:id="tfMaiorEl" promptText="Maior Elevação" GridPane.rowIndex="8" />
-                              <TextField fx:id="tfMenorEl" promptText="Menor Elevação" GridPane.rowIndex="9" />
+                              <TextField fx:id="tfAtividadeC" promptText="Atividade" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" />
+                              <TextField fx:id="tfTempoC" promptText="Tempo" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfDuracaoC" promptText="Duração" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfDistanciaC" promptText="Distância" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfCaloriasC" promptText="Calorias Perdidas" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfPassosC" promptText="Passos" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfVelMed" promptText="Velocidade Média" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="6" />
+                              <TextField fx:id="tfVelMax" promptText="Velocidade Máxima" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="7" />
+                              <TextField fx:id="tfMaiorEl" promptText="Maior Elevação" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="8" />
+                              <TextField fx:id="tfMenorEl" promptText="Menor Elevação" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="9" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
@@ -372,26 +360,34 @@
                         </GridPane>
                         <HBox alignment="CENTER" layoutX="157.0" layoutY="411.0" prefHeight="34.0" prefWidth="144.0">
                            <children>
-                              <Button disable="true" mnemonicParsing="false" onAction="#atualiza" text="Atualizar">
+                              <Button fx:id="btnAttAtC" disable="true" mnemonicParsing="false" onAction="#atualiza" style="-fx-background-color: #F7B733;" text="Atualizar">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
-                        <GridPane fx:id="gridEdicao2211" layoutX="185.0" layoutY="101.0" prefHeight="178.0" prefWidth="176.0" visible="false">
+                        <GridPane fx:id="gridEdicao2211" layoutX="161.0" layoutY="111.0" prefHeight="294.0" prefWidth="155.0" visible="false">
                            <children>
-                              <TextField fx:id="tfAtividade11" promptText="Atividade" />
-                              <TextField fx:id="tfTempo11" promptText="Tempo" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfDuracao11" promptText="Duração" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfDistancia11" promptText="Distância" GridPane.rowIndex="3" />
-                              <TextField fx:id="tfCalorias11" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
-                              <TextField fx:id="tfPassos11" promptText="Passos" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfAtividadeC2" promptText="Atividade" />
+                              <TextField fx:id="tfTempoC2" promptText="Tempo" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfDuracaoC2" promptText="Duração" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfDistanciaC2" promptText="Distância" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfCaloriasC2" promptText="Calorias Perdidas" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfPassosC2" promptText="Passos" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfVelMed2" promptText="Velocidade Média" GridPane.rowIndex="6" />
+                              <TextField fx:id="tfVelMax2" promptText="Velocidade Máxima" GridPane.rowIndex="7" />
+                              <TextField fx:id="tfMaiorEl2" promptText="Maior Elevação" GridPane.rowIndex="8" />
+                              <TextField fx:id="tfMenorEl2" promptText="Menor Elevação" GridPane.rowIndex="9" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.6666259765625" minWidth="10.0" prefWidth="132.0" />
                            </columnConstraints>
                            <rowConstraints>
+                              <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -494,7 +490,7 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <BarChart fx:id="graficoColunasRitmo" title="Ritmo">
+                              <BarChart fx:id="graficoColunasRitmo" prefHeight="461.0" prefWidth="689.0" title="Ritmo">
                                 <xAxis>
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
@@ -510,14 +506,15 @@
             </TabPane>
          </children>
       </HBox>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1279.0">
+      <MenuBar prefHeight="26.0" prefWidth="1280.0" style="-fx-background-color: #FC4A1A;">
         <menus>
           <Menu mnemonicParsing="false" text="Arquivo">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#exibeImportacao" text="Importar arquivos">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
+                     </accelerator>
+                  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#exportaPDF" text="Exportar PDF..." />
                   <MenuItem mnemonicParsing="false" onAction="#sair" text="Sair" />
             </items>
@@ -549,13 +546,15 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#pesquisaClientes" text="Relatório detalhado" />
                   <MenuItem mnemonicParsing="false" onAction="#relatorioDetalhado" text="Relatório completo" />
-               </items></Menu>
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Gráficos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#graficoColunasBasico" text="Gráfico Básico" />
                   <MenuItem mnemonicParsing="false" onAction="#graficoLinhas" text="Gráfico de Linhas" />
                   <MenuItem mnemonicParsing="false" onAction="#graficoColunasCompleto" text="Gráfico Completo" />
-               </items></Menu>
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <GridPane fx:id="gridImportacao" layoutX="358.0" layoutY="78.0" prefHeight="123.0" prefWidth="235.0" visible="false">
@@ -569,20 +568,20 @@
           <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField GridPane.rowIndex="1" />
-            <Button fx:id="btnImportar" mnemonicParsing="false" onMouseClicked="#importarArquivos" text="Importar..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" GridPane.rowIndex="1" />
+            <Button fx:id="btnImportar" mnemonicParsing="false" onMouseClicked="#importarArquivos" style="-fx-background-color: #F7B733;" text="Importar..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="261.0" text="Selecione o(s) arquivo(s)..." GridPane.columnSpan="2" />
          </children>
       </GridPane>
       <HBox fx:id="iniciaPesquisa" alignment="CENTER" layoutX="1.0" layoutY="27.0" prefHeight="35.0" prefWidth="900.0" visible="false">
          <children>
             <Label text="Informe o nome do cliente: " />
-            <TextField fx:id="campoBuscaCliente" promptText="Nome do cliente">
+            <TextField fx:id="campoBuscaCliente" promptText="Nome do cliente" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnPesquisaCliente" defaultButton="true" mnemonicParsing="false" onAction="#pesquisaCliente" text="Pesquisar dados" />
+            <Button fx:id="btnPesquisaCliente" defaultButton="true" mnemonicParsing="false" onAction="#pesquisaCliente" style="-fx-background-color: #F7B733;" text="Pesquisar dados" />
          </children>
          <padding>
             <Insets top="10.0" />
@@ -591,8 +590,8 @@
       <HBox fx:id="hboxExercicio" alignment="BASELINE_CENTER" layoutX="1.0" layoutY="89.0" prefHeight="100.0" prefWidth="900.0" visible="false">
          <children>
             <Label text="Selecione o exercício desejado: " />
-            <ChoiceBox fx:id="escolheExercicio" prefWidth="150.0" />
-            <Button fx:id="btnVisualizaRelatorio" mnemonicParsing="false" onMouseClicked="#exibeRelatorio" text="Visualizar Relatório">
+            <ChoiceBox fx:id="escolheExercicio" prefWidth="150.0" style="-fx-background-color: #F7B733;" />
+            <Button fx:id="btnVisualizaRelatorio" mnemonicParsing="false" onMouseClicked="#exibeRelatorio" style="-fx-background-color: #F7B733;" text="Visualizar Relatório">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -601,7 +600,7 @@
       </HBox>
       <HBox fx:id="relatorioBasico" alignment="CENTER" layoutX="184.0" layoutY="157.0" prefHeight="425.0" prefWidth="524.0" visible="false">
          <children>
-            <TextArea fx:id="relatorio" editable="false">
+            <TextArea fx:id="relatorio" editable="false" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
@@ -610,7 +609,7 @@
       </HBox>
       <HBox fx:id="hboxRelatorioDetalhado" alignment="CENTER" layoutX="88.0" layoutY="69.0" prefHeight="499.0" prefWidth="748.0" visible="false">
          <children>
-            <TextArea fx:id="relatorioDetalhado" editable="false" prefHeight="499.0" prefWidth="622.0" />
+            <TextArea fx:id="relatorioDetalhado" editable="false" prefHeight="499.0" prefWidth="622.0" style="-fx-border-color: #FC4A1A; -fx-border-radius: 5;" />
          </children>
       </HBox>
       <GridPane fx:id="gridPaneGrafico" layoutX="216.0" layoutY="44.0" prefHeight="90.0" prefWidth="395.0" visible="false">
@@ -625,8 +624,8 @@
             <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ChoiceBox fx:id="escolheClienteGraficoBasico" prefHeight="25.0" prefWidth="405.0" GridPane.columnSpan="3" />
-            <Button mnemonicParsing="false" onAction="#gerarGraficos" prefHeight="25.0" prefWidth="133.0" text="Aplicar Período" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <ChoiceBox fx:id="escolheClienteGraficoBasico" prefHeight="25.0" prefWidth="405.0" style="-fx-background-color: #F7B733;" GridPane.columnSpan="3" />
+            <Button mnemonicParsing="false" onAction="#gerarGraficos" prefHeight="25.0" prefWidth="133.0" style="-fx-background-color: #F7B733;" text="Aplicar Período" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -789,7 +788,7 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <BarChart fx:id="graficoColunasRitmoCompleto" title="Ritmo">
+                              <BarChart fx:id="graficoColunasRitmoCompleto" prefHeight="459.0" prefWidth="689.0" title="Ritmo">
                                 <xAxis>
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>

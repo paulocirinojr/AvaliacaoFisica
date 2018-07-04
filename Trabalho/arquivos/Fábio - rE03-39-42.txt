@@ -1,0 +1,19 @@
+Exercício: Futebol
+
+------ Usuário ------
+Nome: Fábio
+Sexo: Masculino
+Altura: 1,80 m
+Peso: 80,0 Kg
+Data de nascimento: 22/04/1980
+E-mail: fabioferreira@ifsudestemg.edu.br
+CPF: 111.111.111.-33
+Whatsapp: (32) 9999-9999
+
+------ Detalhes do exercício ------
+Data: 02/06/2008
+Tempo: 13:00-15:00
+Duração: 2:00:00
+Distância: 15.0 Km
+Calorias perdidas: 500.0 Kcal
+Passos: 3321

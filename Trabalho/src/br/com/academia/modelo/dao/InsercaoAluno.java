@@ -116,5 +116,28 @@ public class InsercaoAluno {
 		return aluno;
 	} // pesquisaAluno()
 
+	public boolean atualiza(Aluno alunoAntigo, Aluno alunoNovo, Connection conexao){
+		String sql = "UPDATE aluno SET nome=?, sexo=?, altura=?, peso=?, email=?, cpf=?, whatsapp=? "
+						+ "WHERE whatsapp=?";
+
+		try {
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.setString(1, alunoNovo.getNome());
+			statement.setString(2, alunoNovo.getSexo());
+			statement.setFloat(3, alunoNovo.getAltura());
+			statement.setFloat(4, alunoNovo.getPeso());
+			statement.setString(5, alunoNovo.getEmail());
+			statement.setString(6, alunoNovo.getCpf());
+			statement.setString(7, alunoNovo.getWhatsapp());
+			statement.setString(8, alunoAntigo.getWhatsapp());
+
+			statement.execute();
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Erro na atualização do aluno no BD !", AlertType.ERROR).showAndWait();
+		}
+		return true;
+	} // atualiza()
+
 
 } // class InsercaoAluno

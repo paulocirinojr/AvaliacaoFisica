@@ -16,9 +16,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("AtividadeFisica.fxml"));
-			Scene scene = new Scene(root,1280,700);
+			Scene scene = new Scene(root,1270,700);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.setTitle("Atividades Físicas - TOO 2018");
 			primaryStage.show();
 		} catch(Exception e) {

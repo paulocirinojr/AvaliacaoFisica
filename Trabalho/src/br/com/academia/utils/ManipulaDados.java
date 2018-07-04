@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -868,7 +869,13 @@ public class ManipulaDados {
 	    			listClientes.add(nome);
 	    	}
 
+	    	listClientes.sort(new Comparator<String>() {
 
+				@Override
+				public int compare(String o1, String o2) {
+					return o1.compareTo(o2);
+				}
+			});
 
 	    	// Percorrendo a lista de atividadesTipo2 e adicionando o email dos clientes no array emailClientes.
 	    	for (int i = 0 ; i < atividade2List.size() ; i++){
@@ -896,8 +903,6 @@ public class ManipulaDados {
 	    			}
 	    		}
 	    	}
-
-
 
 	    	// Loop para percorrer toda lista de clientes.
 	    	for (int i = 0 ; i < listClientes.size();i++){

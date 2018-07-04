@@ -251,9 +251,6 @@ public class InsercaoAtividadeCompleta {
 
 				// Insere a atividade na lista.
 				atividadesList.add(atividade);
-
-				// Insere a atividade na lista.
-				atividadesList.add(atividade);
 			}
 		} catch (SQLException e) {
 			exibeAlerta("ERRO FATAL", "Erro na requisição dos dados no banco !", AlertType.ERROR).showAndWait();
@@ -632,4 +629,32 @@ public class InsercaoAtividadeCompleta {
 		}
 		return ritmosList;
 	} // listaRitmos()
+
+	public boolean atualiza(AtividadeCompleta atividadeAntiga, AtividadeCompleta atividadeNova, Connection conexao){
+		String sql = "UPDATE atividade_completa SET tempo=?, atividade=?, duracao=?, distancia=?, calorias=?, passos=?"
+						+	" WHERE atividade=? AND tempo=? AND duracao=?";
+
+		try {
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.setString(1, atividadeNova.getTempo());
+			statement.setString(2, atividadeNova.getExercicio());
+			statement.setString(3, atividadeNova.getDuracao());
+			statement.setFloat(4, atividadeNova.getDistancia());
+			statement.setFloat(5, atividadeNova.getCaloriasPerdidas());
+			statement.setInt(6, atividadeNova.getPassos());
+			statement.setString(7, atividadeAntiga.getExercicio());
+			statement.setString(8, atividadeAntiga.getTempo());
+			statement.setString(9, atividadeAntiga.getDuracao());
+
+			statement.execute();
+
+			return true;
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Erro na atualização da atividade no BD!", AlertType.ERROR).showAndWait();
+		}
+		return false;
+	}
+
+
 } // class InsercaoAtividade1

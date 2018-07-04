@@ -67,15 +67,18 @@ public class AtividadeFisicaController {
 
 	// Elementos JavaFX.
     @FXML
-    private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio, btnAtualizaAluno, btnRemoveAluno, btnRemoveUsuario;
+    private Button btnImportar, btnPesquisaCliente, btnVisualizaRelatorio, btnAtualizaAluno, btnRemoveAluno, btnRemoveUsuario,
+    			btnAtualizaUser, btnAttAtB, btnAttAtC;
     @FXML
-    private GridPane gridImportacao, gridPaneGrafico, gridDetalhes, gridBuscaAluno, gridBuscaAtividade, gridBuscaAtividadeAluno;
+    private GridPane gridImportacao, gridPaneGrafico, gridDetalhes, gridBuscaAluno, gridBuscaAtividade, gridBuscaAtividadeAluno, gridEdicao, gridEdicao2;
     @FXML
     private HBox iniciaPesquisa, hboxExercicio, relatorioBasico, hboxRelatorioDetalhado, hboxGraficoBasico, hboxGraficoLinha, hboxGraficoCompleto;
     @FXML
     private TextField campoBuscaCliente, tfPeso, tfNome, tfSexo, tfAltura, tfEmail, tfCPF, tfWpp, tfUser, tfSenha, tfPapel, tfAtividade, tfTempo, tfDuracao,
     							 tfDistancia, tfCalorias, tfPassos, tfAtividadeC, tfTempoC, tfDuracaoC, tfDistanciaC, tfCaloriasC, tfPassosC, tfVelMed, tfVelMax,
-    							 tfMaiorEl, tfMenorEl, tfPesquisa, tfPesquisaAtividade, tfPesquisaAtividadeAluno;
+    							 tfMaiorEl, tfMenorEl, tfPesquisa, tfPesquisaAtividade, tfPesquisaAtividadeAluno, tfPeso2, tfNome2, tfSexo2, tfAtividade2, tfTempo2,
+    							 tfAltura2, tfEmail2, tfCPF2, tfWpp2, tfUser2, tfPapel2, tfSenha2, tfDuracao2, tfDistancia2, tfCalorias2, tfPassos2, tfAtividadeC2,
+    							 tfTempoC2, tfDuracaoC2, tfDistanciaC2, tfCaloriasC2, tfPassosC2, tfVelMed2, tfVelMax2, tfMaiorEl2, tfMenorEl2;
     @FXML
     private ChoiceBox<String> escolheExercicio, escolheClienteGraficoBasico;
     @FXML
@@ -152,12 +155,12 @@ public class AtividadeFisicaController {
 
     	colTempo.setCellValueFactory(new PropertyValueFactory<>("tempo"));
     	colDuracao.setCellValueFactory(new PropertyValueFactory<>("duracao"));
-    	colAtividade.setCellValueFactory(new PropertyValueFactory<>("atividade"));
+    	colAtividade.setCellValueFactory(new PropertyValueFactory<>("exercicio"));
     	colDistancia.setCellValueFactory(new PropertyValueFactory<>("distancia"));
     	colCalorias.setCellValueFactory(new PropertyValueFactory<>("caloriasPerdidas"));
     	colPassos.setCellValueFactory(new PropertyValueFactory<>("passos"));
 
-    	colAtividadeCompleta.setCellValueFactory(new PropertyValueFactory<>("atividade"));
+    	colAtividadeCompleta.setCellValueFactory(new PropertyValueFactory<>("exercicio"));
     	colTempoCompleta.setCellValueFactory(new PropertyValueFactory<>("tempo"));
     	colDuracaoCompleta.setCellValueFactory(new PropertyValueFactory<>("duracao"));
     	colCaloriasCompleta.setCellValueFactory(new PropertyValueFactory<>("caloriasPerdidas"));
@@ -168,7 +171,7 @@ public class AtividadeFisicaController {
     	colMaiorElv.setCellValueFactory(new PropertyValueFactory<>("maiorElevacao"));
     	colMenorElv.setCellValueFactory(new PropertyValueFactory<>("menorElevacao"));
 
-    	colPesq1.setCellValueFactory(new PropertyValueFactory<>("atividade"));
+    	colPesq1.setCellValueFactory(new PropertyValueFactory<>("exercicio"));
     	colPesq2.setCellValueFactory(new PropertyValueFactory<>("duracao"));
 
     }
@@ -294,7 +297,6 @@ public class AtividadeFisicaController {
      */
     @FXML
     private void exibeRelatorio() {
-    	limpaTela();
     	AtividadeFisica atividade;
     	String exercicio, data, comparadorD1, comparadorD2;
 
@@ -635,6 +637,14 @@ public class AtividadeFisicaController {
     			tfCPF.setText(aluno.getCpf());
     			tfWpp.setText(aluno.getWhatsapp());
 
+    			tfNome2.setText(aluno.getNome());
+    			tfSexo2.setText(aluno.getSexo());
+    			tfAltura2.setText(String.format("%1.2f", aluno.getAltura()));
+    			tfPeso2.setText(String.format("%1.2f", aluno.getPeso()));
+    			tfEmail2.setText(aluno.getEmail());
+    			tfCPF2.setText(aluno.getCpf());
+    			tfWpp2.setText(aluno.getWhatsapp());
+
     			btnRemoveAluno.setDisable(false);
     			btnAtualizaAluno.setDisable(false);
     		}
@@ -651,7 +661,12 @@ public class AtividadeFisicaController {
     			tfSenha.setText(usuario.getSenha());
     			tfPapel.setText(usuario.getPapel());
 
+    			tfUser2.setText(usuario.getUsuario());
+    			tfSenha2.setText(usuario.getSenha());
+    			tfPapel2.setText(usuario.getPapel());
+
     			btnRemoveUsuario.setDisable(false);
+    			btnAtualizaUser.setDisable(false);
 
     		}
     	}
@@ -669,6 +684,15 @@ public class AtividadeFisicaController {
     			tfDistancia.setText(String.format("%1.2f", atividade.getDistancia()));
     			tfCalorias.setText(String.format("%1.2f", atividade.getCaloriasPerdidas()));
     			tfPassos.setText(String.format("%d", atividade.getPassos()));
+
+    			tfAtividade2.setText(atividade.getExercicio());
+    			tfTempo2.setText(atividade.getTempo());
+    			tfDuracao2.setText(atividade.getDuracao());
+    			tfDistancia2.setText(String.format("%1.2f", atividade.getDistancia()));
+    			tfCalorias2.setText(String.format("%1.2f", atividade.getCaloriasPerdidas()));
+    			tfPassos2.setText(String.format("%d", atividade.getPassos()));
+
+    			btnAttAtB.setDisable(false);
     		}
     	}
     }
@@ -689,6 +713,19 @@ public class AtividadeFisicaController {
     			tfVelMax.setText(String.format("%1.2f", atividade.getVelocidadeMaxima()));
     			tfMaiorEl.setText(String.format("%1.2f", atividade.getMaiorElevacao()));
     			tfMenorEl.setText(String.format("%1.2f", atividade.getMenorElevacao()));
+
+    			tfAtividadeC2.setText(atividade.getExercicio());
+    			tfTempoC2.setText(atividade.getTempo());
+    			tfDuracaoC2.setText(atividade.getDuracao());
+    			tfDistanciaC2.setText(String.format("%1.2f", atividade.getDistancia()));
+    			tfCaloriasC2.setText(String.format("%1.2f", atividade.getCaloriasPerdidas()));
+    			tfPassosC2.setText(String.format("%d", atividade.getPassos()));
+    			tfVelMed2.setText(String.format("%1.2f", atividade.getVelocidadeMedia()));
+    			tfVelMax2.setText(String.format("%1.2f", atividade.getVelocidadeMaxima()));
+    			tfMaiorEl2.setText(String.format("%1.2f", atividade.getMaiorElevacao()));
+    			tfMenorEl2.setText(String.format("%1.2f", atividade.getMenorElevacao()));
+
+    			btnAttAtC.setDisable(false);
 
     		}
     	}
@@ -720,7 +757,152 @@ public class AtividadeFisicaController {
 
     @FXML
     private void atualiza(){
+    	if (edicaoAluno.isVisible()){
+    		Aluno alunoAntigo, alunoNovo;
 
+    		alunoAntigo = new Aluno();
+    		alunoNovo = new Aluno();
+
+    		alunoAntigo.setWhatsapp(tfWpp2.getText());
+    		alunoNovo.setAltura(Float.parseFloat(tfAltura.getText()));
+    		alunoNovo.setCpf(tfCPF.getText());
+    		alunoNovo.setEmail(tfEmail.getText());
+    		alunoNovo.setNome(tfNome.getText());
+    		alunoNovo.setPeso(Float.parseFloat(tfPeso.getText()));
+    		alunoNovo.setSexo(tfSexo.getText());
+    		alunoNovo.setWhatsapp(tfWpp.getText());
+
+    		if (new InsercaoAluno().atualiza(alunoAntigo, alunoNovo, conexaoBD)){
+    			exibeAlerta("SUCESSO", "Aluno atualizado com sucesso!", AlertType.INFORMATION).showAndWait();
+    			atualizaTabelaAlunos();
+    			limpaCampos();
+    			btnRemoveAluno.setDisable(true);
+    			btnAtualizaAluno.setDisable(true);
+    		}
+    	} // edicaoAluno
+    	else{
+    		if (edicaoUsuario.isVisible()){
+    			Usuario newUser, oldUser;
+
+    			newUser = new Usuario();
+    			oldUser = new Usuario();
+
+    			oldUser.setUsuario(tfUser2.getText());
+    			newUser.setPapel(tfPapel.getText());
+    			newUser.setUsuario(tfUser.getText());
+    			newUser.setSenha(tfSenha.getText());
+
+    			if (new InsercaoUsuario().atualiza(oldUser, newUser, conexaoBD)){
+        			exibeAlerta("SUCESSO", "Usuário atualizado com sucesso!", AlertType.INFORMATION).showAndWait();
+        			atualizaTabelaUsuarios();
+        			limpaCampos();
+        			btnRemoveUsuario.setDisable(true);
+        			btnAtualizaUser.setDisable(true);
+    			}
+    		}
+    		else{
+    			if (edicaoAtividadeBasica.isVisible()){
+    				AtividadeBasica atividadeAntiga, atividadeNova;
+
+    				atividadeAntiga = new AtividadeBasica();
+    				atividadeNova = new AtividadeBasica();
+
+    				atividadeAntiga.setExercicio(tfAtividade2.getText());
+    				atividadeAntiga.setTempo(tfTempo2.getText());
+    				atividadeAntiga.setDuracao(tfDuracao2.getText());
+
+    				atividadeNova.setExercicio(tfAtividade.getText());
+    				atividadeNova.setDuracao(tfDuracao.getText());
+    				atividadeNova.setTempo(tfTempo.getText());
+    				atividadeNova.setCaloriasPerdidas(Float.parseFloat(tfCalorias.getText()));
+    				atividadeNova.setDistancia(Float.parseFloat(tfDistancia.getText()));
+    				atividadeNova.setPassos(Integer.parseInt(tfPassos.getText()));
+
+    				if (new InsercaoAtividadeBasica().atualiza(atividadeAntiga, atividadeNova, conexaoBD)){
+            			exibeAlerta("SUCESSO", "Atividade atualizada com sucesso!", AlertType.INFORMATION).showAndWait();
+            			atualizaTabelaAtivBasica();
+            			limpaCampos();
+            			btnAttAtB.setDisable(true);
+    				}
+    			}
+    			else{
+    				if (edicaoAtividadeCompleta.isVisible()){
+    					AtividadeCompleta atividadeAntiga, atividadeNova;
+
+    					atividadeAntiga = new AtividadeCompleta();
+        				atividadeNova = new AtividadeCompleta();
+
+        				atividadeAntiga.setExercicio(tfAtividadeC2.getText());
+        				atividadeAntiga.setTempo(tfTempoC2.getText());
+        				atividadeAntiga.setDuracao(tfDuracaoC2.getText());
+
+        				atividadeNova.setExercicio(tfAtividadeC.getText());
+        				atividadeNova.setDuracao(tfDuracaoC.getText());
+        				atividadeNova.setTempo(tfTempoC.getText());
+        				atividadeNova.setCaloriasPerdidas(Float.parseFloat(tfCaloriasC.getText()));
+        				atividadeNova.setDistancia(Float.parseFloat(tfDistanciaC.getText()));
+        				atividadeNova.setPassos(Integer.parseInt(tfPassosC.getText()));
+        				atividadeNova.setMaiorElevacao(Double.parseDouble(tfMaiorEl.getText()));
+        				atividadeNova.setMenorElevacao(Double.parseDouble(tfMenorEl.getText()));
+        				atividadeNova.setVelocidadeMaxima(Float.parseFloat(tfVelMax.getText()));
+        				atividadeNova.setVelocidadeMedia(Float.parseFloat(tfVelMed.getText()));
+
+        				if (new InsercaoAtividadeCompleta().atualiza(atividadeAntiga, atividadeNova, conexaoBD)){
+                			exibeAlerta("SUCESSO", "Atividade atualizada com sucesso!", AlertType.INFORMATION).showAndWait();
+                			atualizaTabelaAtivCompleta();
+                			limpaCampos();
+                			btnAttAtC.setDisable(true);
+        				}
+    				}
+    			}
+    		}
+    	}
+
+
+
+    } // atualiza()
+
+    private void limpaCampos(){
+    	campoBuscaCliente.clear();
+    	tfPeso.clear();
+    	tfNome.clear();
+    	tfSexo.clear();
+    	tfAltura.clear();
+    	tfEmail.clear();
+    	tfCPF.clear();
+    	tfWpp.clear();
+    	tfUser.clear();
+    	tfSenha.clear();
+    	tfPapel.clear();
+    	tfAtividade.clear();
+    	tfTempo.clear();
+    	tfDuracao.clear();
+		tfDistancia.clear();
+		tfCalorias.clear();
+		tfPassos.clear();
+		tfAtividadeC.clear();
+		tfTempoC.clear();
+		tfDuracaoC.clear();
+		tfDistanciaC.clear();
+		tfCaloriasC.clear();
+		tfPassosC.clear();
+		tfVelMed.clear();
+		tfVelMax.clear();
+		tfMaiorEl.clear();
+		tfMenorEl.clear();
+		tfPesquisa.clear();
+		tfPesquisaAtividade.clear();
+		tfPesquisaAtividadeAluno.clear();
+		tfPeso2.clear();
+		tfNome2.clear();
+		tfSexo2.clear();
+		tfAltura2.clear();
+		tfEmail2.clear();
+		tfCPF2.clear();
+		tfWpp2.clear();
+		relatorio.clear();
+		relatorioDetalhado.clear();
+		tfBusca.clear();
     }
 
 
@@ -809,7 +991,6 @@ public class AtividadeFisicaController {
     }
     @FXML
     private void buscaAtividadeAluno(){
-    	limpaTela();
     	List<AtividadeBasica> basicList = InsercaoAtividadeBasica.listaAtividadesPorCliente(tfPesquisaAtividadeAluno.getText(), dataAtividadeInicio.getValue(), dataAtividadeFinal.getValue(), conexaoBD);
 		List<AtividadeCompleta> completaList = InsercaoAtividadeCompleta.listaAtividadesPorCliente(tfPesquisaAtividadeAluno.getText(), dataAtividadeInicio.getValue(), dataAtividadeFinal.getValue(), conexaoBD);
 		List<AtividadeFisica> atividadesList = new ArrayList<>();

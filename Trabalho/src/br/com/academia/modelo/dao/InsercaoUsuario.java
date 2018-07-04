@@ -57,7 +57,7 @@ public class InsercaoUsuario {
 			e.printStackTrace();
 		}
 		return usersList;
-	}
+	} // listaUsers()
 
 	public void remove(Usuario usuario, Connection conexao){
 		String sql = "DELETE FROM usuario WHERE usuario=?";
@@ -72,6 +72,24 @@ public class InsercaoUsuario {
 		} catch (SQLException e) {
 			exibeAlerta("ERRO", "Erro na remoção do usuário do BD.", AlertType.ERROR).showAndWait();
 		}
-	}
+	} // remove()
 
-}
+	public boolean atualiza(Usuario usuarioAntigo, Usuario usuarioNovo, Connection conexao){
+		String sql = "UPDATE usuario SET usuario=?, senha=?, papel=? WHERE usuario=?";
+
+		try {
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.setString(1, usuarioNovo.getUsuario());
+			statement.setString(2, usuarioNovo.getSenha());
+			statement.setString(3, usuarioNovo.getPapel());
+			statement.setString(4, usuarioAntigo.getUsuario());
+
+			statement.execute();
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Erro na atualização do usuário no BD !", AlertType.ERROR).showAndWait();
+		}
+		return true;
+	} // atualiza()
+
+} // class InsercaoUsuario
