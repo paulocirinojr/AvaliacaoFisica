@@ -769,11 +769,11 @@ public class AtividadeFisicaController {
     		alunoNovo = new Aluno();
 
     		alunoAntigo.setWhatsapp(tfWpp2.getText());
-    		alunoNovo.setAltura(Float.parseFloat(tfAltura.getText()));
+    		alunoNovo.setAltura(Float.parseFloat(tfAltura.getText().replaceAll(",", ".")));
     		alunoNovo.setCpf(tfCPF.getText());
     		alunoNovo.setEmail(tfEmail.getText());
     		alunoNovo.setNome(tfNome.getText());
-    		alunoNovo.setPeso(Float.parseFloat(tfPeso.getText()));
+    		alunoNovo.setPeso(Float.parseFloat(tfPeso.getText().replace(",", ".")));
     		alunoNovo.setSexo(tfSexo.getText());
     		alunoNovo.setWhatsapp(tfWpp.getText());
 
@@ -819,8 +819,8 @@ public class AtividadeFisicaController {
     				atividadeNova.setExercicio(tfAtividade.getText());
     				atividadeNova.setDuracao(tfDuracao.getText());
     				atividadeNova.setTempo(tfTempo.getText());
-    				atividadeNova.setCaloriasPerdidas(Float.parseFloat(tfCalorias.getText()));
-    				atividadeNova.setDistancia(Float.parseFloat(tfDistancia.getText()));
+    				atividadeNova.setCaloriasPerdidas(Float.parseFloat(tfCalorias.getText().replaceAll(",", ".")));
+    				atividadeNova.setDistancia(Float.parseFloat(tfDistancia.getText().replaceAll(",", ".")));
     				atividadeNova.setPassos(Integer.parseInt(tfPassos.getText()));
 
     				if (new InsercaoAtividadeBasica().atualiza(atividadeAntiga, atividadeNova, conexaoBD)){
@@ -844,13 +844,13 @@ public class AtividadeFisicaController {
         				atividadeNova.setExercicio(tfAtividadeC.getText());
         				atividadeNova.setDuracao(tfDuracaoC.getText());
         				atividadeNova.setTempo(tfTempoC.getText());
-        				atividadeNova.setCaloriasPerdidas(Float.parseFloat(tfCaloriasC.getText()));
-        				atividadeNova.setDistancia(Float.parseFloat(tfDistanciaC.getText()));
+        				atividadeNova.setCaloriasPerdidas(Float.parseFloat(tfCaloriasC.getText().replaceAll(",", ".")));
+        				atividadeNova.setDistancia(Float.parseFloat(tfDistanciaC.getText().replaceAll(",", ".")));
         				atividadeNova.setPassos(Integer.parseInt(tfPassosC.getText()));
-        				atividadeNova.setMaiorElevacao(Double.parseDouble(tfMaiorEl.getText()));
-        				atividadeNova.setMenorElevacao(Double.parseDouble(tfMenorEl.getText()));
-        				atividadeNova.setVelocidadeMaxima(Float.parseFloat(tfVelMax.getText()));
-        				atividadeNova.setVelocidadeMedia(Float.parseFloat(tfVelMed.getText()));
+        				atividadeNova.setMaiorElevacao(Double.parseDouble(tfMaiorEl.getText().replaceAll(",", ".")));
+        				atividadeNova.setMenorElevacao(Double.parseDouble(tfMenorEl.getText().replaceAll(",", ".")));
+        				atividadeNova.setVelocidadeMaxima(Float.parseFloat(tfVelMax.getText().replaceAll(",", ".")));
+        				atividadeNova.setVelocidadeMedia(Float.parseFloat(tfVelMed.getText().replaceAll(",", ".")));
 
         				if (new InsercaoAtividadeCompleta().atualiza(atividadeAntiga, atividadeNova, conexaoBD)){
                 			exibeAlerta("SUCESSO", "Atividade atualizada com sucesso!", AlertType.INFORMATION).showAndWait();
