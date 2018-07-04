@@ -480,21 +480,27 @@ public class AtividadeFisicaController {
 		        	for (int i = 0 ; i < NUMERO_GRAFICOS - 3 ; i++){
 		    	    	switch (i + 1) {
 		    			case 1:
+		    				System.out.println("Gráfico Duração");
 		    				preencheGrafico(i+1, graficoColunasDuracao, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 2:
+		    				System.out.println("Gráfico Distancia");
 		    				preencheGrafico(i+1, graficoColunasDistancia, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 3:
+		    				System.out.println("Gráfico Calorias");
 		    				preencheGrafico(i+1, graficoColunasCalorias, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 4:
+		    				System.out.println("Gráfico Passos");
 		    				preencheGrafico(i+1, graficoColunasPassos, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 5:
+		    				System.out.println("Gráfico Velocidade");
 		    				preencheGrafico(i+1, graficoColunasVelocidade, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 6:
+		    				System.out.println("Gráfico Ritmo");
 		    				preencheGrafico(i+1, graficoColunasRitmo, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    	    	}
@@ -527,25 +533,24 @@ public class AtividadeFisicaController {
 						Label[] linhas = {totalCaloriasPerdidas, mediaCaloriasPerdidas, distanciaTotal, distanciaMedia, totalPassos};
 
 						for (int i = 0 ; i < NUMERO_GRAFICOS_COMPLETOS ; i++){
-							// Altera o conteúdo do SwingNode.
 			    	    	switch (i + NUMERO_GRAFICOS + 1) {
 			    			case 10:
 			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 11:
-			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDistanciaCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 12:
-			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasCaloriasCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 13:
-			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasPassosCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 14:
-			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasVelocidadeCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    			case 15:
-			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasDuracaoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
+			    				preencheGrafico(i + NUMERO_GRAFICOS + 1, graficoColunasRitmoCompleto, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, linhas);
 			    				break;
 			    	    	}
 			    	    	tabGraficosCompletos.setVisible(true);
@@ -1004,6 +1009,11 @@ public class AtividadeFisicaController {
 
 		tabelaPesquisa.setItems(atividades);
 		tabelaPesquisa.setVisible(true);
+    } // buscaAtividadeAluno()
+
+    @FXML
+    private void encerraSessao(){
+    	Main.trocaTela("login");
     }
 
 

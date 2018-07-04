@@ -92,4 +92,23 @@ public class InsercaoUsuario {
 		return true;
 	} // atualiza()
 
+	public boolean verificaUsuario(Usuario usuario, Connection conexao){
+		String sql = "SELECT * FROM usuario WHERE usuario=?";
+
+		try {
+			PreparedStatement statement = conexao.prepareStatement(sql);
+			statement.setString(1, usuario.getUsuario());
+
+			ResultSet rs = statement.executeQuery();
+
+			if (rs.next()){
+				if (rs.getString("senha").equals(usuario.getSenha()))
+					return true;
+			}
+		} catch (SQLException e) {
+			exibeAlerta("ERRO", "Erro na verificação do usuário!", AlertType.ERROR).showAndWait();
+		}
+		return false;
+	}
+
 } // class InsercaoUsuario

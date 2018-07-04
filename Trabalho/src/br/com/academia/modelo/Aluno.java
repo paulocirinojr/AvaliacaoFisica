@@ -79,7 +79,7 @@ public class Aluno {
 	public String toString() {
 		SimpleDateFormat DN = new SimpleDateFormat("dd/MM/yyyy");
 
-		return String.format("------ Usuário ------\nNome: %s\nSexo: %sAltura: %1.2f m\nPeso: %1.1f Kg\nData de Nascimento: %s\nE-mail: %s"
+		return String.format("------ Usuário ------\nNome: %s\nSexo: %s\nAltura: %1.2f m\nPeso: %1.1f Kg\nData de Nascimento: %s\nE-mail: %s"
 				+ "\nCPF: %s\nWhatsapp: %s",
 				nome, sexo, altura, peso, DN.format(dataNascimento.getTime()), email, cpf, whatsapp);
 	}
@@ -99,7 +99,4 @@ public class Aluno {
 	public void setWhatsapp(String whatsapp) {
 		this.whatsapp = whatsapp;
 	}
-
-
-
 } // class Usuario

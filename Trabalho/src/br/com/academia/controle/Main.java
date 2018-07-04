@@ -12,18 +12,41 @@ import javafx.fxml.FXMLLoader;
  *
  */
 public class Main extends Application {
+	private static Stage janelaPrograma;
+	private static Scene login, programaPrincipal;
+
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			janelaPrograma = primaryStage;
 			Parent root = FXMLLoader.load(getClass().getResource("AtividadeFisica.fxml"));
-			Scene scene = new Scene(root,1270,700);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.setResizable(false);
-			primaryStage.setTitle("Atividades Físicas - TOO 2018");
-			primaryStage.show();
+			programaPrincipal = new Scene(root,1270,700);
+			programaPrincipal.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+			login = new Scene(root,300,200);
+
+			janelaPrograma.setScene(login);
+			janelaPrograma.setResizable(false);
+			janelaPrograma.show();
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void trocaTela(String tela){
+		switch (tela) {
+		case "principal":
+			janelaPrograma.setTitle("Avaliação Física - LPV 2018");
+			janelaPrograma.setScene(programaPrincipal);
+			janelaPrograma.centerOnScreen();
+			break;
+		case "login":
+			janelaPrograma.setTitle("Login - Avaliação Física - LPV 2018");
+			janelaPrograma.setScene(login);
+			janelaPrograma.centerOnScreen();
+			break;
 		}
 	}
 

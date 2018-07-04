@@ -1373,7 +1373,6 @@ public class ManipulaDados {
 } // geraGraficos()
 */
 
-
 	public static void preencheGrafico(int tipoGrafico, BarChart<String, Number> grafico, Connection conexaoBD, LocalDate dataInicial, LocalDate dataFinal, String nomeCliente, Label[] linhas){
 		List<AtividadeCompleta> atividadesList1 = InsercaoAtividadeCompleta.listaAtividadesPorCliente(nomeCliente, conexaoBD);
 		List<AtividadeBasica> atividadesList2 = InsercaoAtividadeBasica.listaAtividadesPorCliente(nomeCliente, conexaoBD);
@@ -1421,14 +1420,17 @@ public class ManipulaDados {
 
 				if (atividade instanceof AtividadeCompleta){
 					AtividadeCompleta tipo1 = (AtividadeCompleta) atividade;
-					exercicio.setName(tipo1.getExercicio());
-					if (tipoGrafico == 5)
+					if (tipoGrafico == 5){
 						dados.setYValue(tipo1.getVelocidadeMedia());
+					}
 					else
 						if (tipoGrafico == 6){
 							dados.setYValue(manipulacao.getRitmoMedio(tipo1.getRitmoMedio()));
 						}
 				}
+
+				if (atividade instanceof AtividadeBasica && tipoGrafico >=5)
+					return;
 
 				dados.setXValue(formatadorData.format(atividade.getData().getTime()));
 
