@@ -370,6 +370,7 @@ public class AtividadeFisicaController {
 		gridBuscaAtividadeAluno.setVisible(false);
 		gridBuscaAtividade.setVisible(false);
 		gridBuscaAluno.setVisible(false);
+		tfBusca.setVisible(false);
 
     } // limpaTela()
 
@@ -480,27 +481,21 @@ public class AtividadeFisicaController {
 		        	for (int i = 0 ; i < NUMERO_GRAFICOS - 3 ; i++){
 		    	    	switch (i + 1) {
 		    			case 1:
-		    				System.out.println("Gráfico Duração");
 		    				preencheGrafico(i+1, graficoColunasDuracao, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 2:
-		    				System.out.println("Gráfico Distancia");
 		    				preencheGrafico(i+1, graficoColunasDistancia, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 3:
-		    				System.out.println("Gráfico Calorias");
 		    				preencheGrafico(i+1, graficoColunasCalorias, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 4:
-		    				System.out.println("Gráfico Passos");
 		    				preencheGrafico(i+1, graficoColunasPassos, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 5:
-		    				System.out.println("Gráfico Velocidade");
 		    				preencheGrafico(i+1, graficoColunasVelocidade, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    			case 6:
-		    				System.out.println("Gráfico Ritmo");
 		    				preencheGrafico(i+1, graficoColunasRitmo, conexaoBD, dataInicial.getValue(), dataFinal.getValue(), nomeCliente, null);
 		    				break;
 		    	    	}
@@ -561,14 +556,6 @@ public class AtividadeFisicaController {
     	}
 			    }
     } // gerarGrafico()
-
-    /**
-     * Abre a janela de destino do PDF.
-     */
-    @FXML
-    private void exportaPDF() {
-    	new ManipulaDados().exportaPDF();
-    } // exportaPDF()
 
     @FXML
     private void edicaoAlunos() {
@@ -947,7 +934,7 @@ public class AtividadeFisicaController {
 
 	@FXML
 	private void buscaAtividade(){
-		limpaTela();
+		//limpaTela();
 		tabelaPesquisa.setVisible(true);
 		List<AtividadeBasica> basicList = InsercaoAtividadeBasica.listaAtividadesPorPeriodo(tfPesquisaAtividade.getText(), dataPesquisaInicio.getValue(), dataPesquisaFinal.getValue(), conexaoBD);
 		List<AtividadeCompleta> completaList = InsercaoAtividadeCompleta.listaAtividadesPorPeriodo(tfPesquisaAtividade.getText(), dataPesquisaInicio.getValue(), dataPesquisaFinal.getValue(), conexaoBD);
@@ -968,8 +955,6 @@ public class AtividadeFisicaController {
     	if (mouse.getButton().equals(MouseButton.PRIMARY)){
     		if (mouse.getClickCount() == 2 && tabelaPesquisa.getSelectionModel().getSelectedItem() != null){
     			AtividadeFisica atividade = tabelaPesquisa.getSelectionModel().getSelectedItem();
-
-    			System.out.println(obtemRelatorioExercicio(atividade, conexaoBD));
 
 	    		try{
 	    					FXMLLoader loader = new FXMLLoader();

@@ -2,7 +2,6 @@ package br.com.academia.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
@@ -14,11 +13,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import br.com.academia.modelo.Aluno;
 import br.com.academia.modelo.AtividadeBasica;
 import br.com.academia.modelo.AtividadeCompleta;
@@ -32,7 +26,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.DirectoryChooser;
 /**
  * Contém todos os métodos que serão utilizados para manipulação dos dados para inserção no banco de dados.
  * @author Paulo
@@ -533,13 +526,18 @@ public class ManipulaDados {
      */
 
     public static double obtemElevacao(String elevacao){
+    	Double elevation;
     	/* Cria um objeto StringBuilder, inicializando com os dados recebidos como parâmetro. Utiliza o método
     	 * substring para retirar o início da linha (Menor elevação: || Menor elevação: ) e o final (m).
     	 */
+    	System.out.println("entrou");
     	StringBuilder strElevacao = new StringBuilder(elevacao.substring(elevacao.indexOf(":")+2, elevacao.indexOf("m") -1));
+    	System.out.println(strElevacao.toString());
     	// Remove o "."
-		strElevacao.replace(strElevacao.indexOf("."), strElevacao.indexOf(".")+1,	"");
-    	Double elevation = Double.parseDouble(strElevacao.toString());
+    	if (elevacao.contains("."))
+    		elevation = Double.parseDouble(strElevacao.toString().replace(".", ""));
+    	else
+    		elevation = Double.parseDouble(strElevacao.toString());
 
     	return elevation;
     } // obtemElevacao()
@@ -1204,175 +1202,6 @@ public class ManipulaDados {
 	 * @return grafico Retorna o objeto <code>JFreeChart</code> gerado.
 	 *
 	 */
-	/*public static JFreeChart geraGraficos(int tipoGrafico, String nomeExercicio, List<AtividadeFisica> atividadesList, Label[] linhas){
-		ManipulaDados manipulacao = new ManipulaDados();
-		AtividadeFisica atividade = null;
-		SimpleDateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
-		String exercicio = "", data = "";
-		DefaultCategoryDataset dados = new DefaultCategoryDataset();
-		JFreeChart grafico = null;
-		int totalPassos = 0;
-		boolean verificador = false;
-		double distanciaMedia, distanciaTotal, mediaCalorias, totalCalorias;
-		distanciaMedia = distanciaTotal = mediaCalorias = totalCalorias = 0;
-		OutputStream saida;
-		String nomeArquivo = "";
-
-		// Loop utilizado para percorrer a lista de atividades.
-		for (int i = 0 ; i < atividadesList.size() ;i++){
-			atividade = atividadesList.get(i);
-			exercicio = atividade.getExercicio();
-
-			 Verifica se o nome do exercício é o mesmo recebido como parâmetro ou se a variável verificador é true.
-			 * A variável verificador é utilizada para criação dos gráficos 10-15.
-
-			if (atividade.getExercicio().equalsIgnoreCase(nomeExercicio) || verificador){
-				data = formatadorData.format(atividade.getData().getTime());
-
-				if (atividade instanceof AtividadeCompleta){
-					AtividadeCompleta tipo1 = (AtividadeCompleta) atividade;
-					if (tipoGrafico == 5)
-						dados.addValue(tipo1.getVelocidadeMedia(), exercicio, data);
-					else
-						if (tipoGrafico == 6)
-							dados.addValue(manipulacao.getRitmoMedio(tipo1.getRitmoMedio()), exercicio, data);
-				}
-
-				switch (tipoGrafico) {
-				case 1:
-					dados.addValue(manipulacao.getMinutosDuracao(atividade.getDuracao()), exercicio, data);
-					grafico = ChartFactory.createBarChart3D(DURACAO, COMPARADOR_DATA, COMPARADOR_DURACAO, dados);
-					break;
-				case 2:
-					dados.addValue(atividade.getDistancia(), exercicio, data);
-					grafico = ChartFactory.createBarChart3D(DISTANCIA, COMPARADOR_DATA, COMPARADOR_DISTANCIA, dados);
-					break;
-				case 3:
-					dados.addValue(atividade.getCaloriasPerdidas(), exercicio, data);
-					grafico = ChartFactory.createBarChart3D(CALORIAS, COMPARADOR_DATA, COMPARADOR_CALORIAS, dados);
-					break;
-				case 4:
-					dados.addValue(atividade.getPassos(), exercicio, data);
-					grafico = ChartFactory.createBarChart3D(PASSOS, COMPARADOR_DATA, COMPARADOR_PASSOS, dados);
-					break;
-				case 5:
-					grafico = ChartFactory.createBarChart3D(VELOCIDADE_MEDIA, COMPARADOR_DATA, COMPARADOR_VM, dados);
-					break;
-				case 6:
-					grafico = ChartFactory.createBarChart3D(RITMO_MEDIO, COMPARADOR_DATA, COMPARADOR_RM, dados);
-					break;
-				case 7:
-					dados.addValue(0, exercicio, data);
-					dados.addValue(atividade.getDistancia(), exercicio, data);
-					grafico = ChartFactory.createLineChart(DISTANCIA, COMPARADOR_DATA, COMPARADOR_DISTANCIA, dados);
-					break;
-				case 8:
-					dados.addValue(0, exercicio, data);
-					dados.addValue(atividade.getCaloriasPerdidas(), exercicio, data);
-					grafico = ChartFactory.createLineChart(CALORIAS, COMPARADOR_DATA, COMPARADOR_CALORIAS, dados);
-					break;
-				case 9:
-					dados.addValue(0, exercicio, data);
-					dados.addValue(atividade.getPassos(), exercicio, data);
-					grafico = ChartFactory.createLineChart(PASSOS, COMPARADOR_DATA, COMPARADOR_PASSOS, dados);
-					break;
-				}
-			}
-			else{
-				// Procedimentos utilizados para geração do gráfico completo.
-				if (tipoGrafico > 9){
-					totalPassos += atividade.getPassos();
-					distanciaTotal += atividade.getDistancia();
-					totalCalorias += atividade.getCaloriasPerdidas();
-
-					if ( i == atividadesList.size() - 1){
-						distanciaMedia = distanciaTotal / atividadesList.size();
-						mediaCalorias = totalCalorias / atividadesList.size();
-
-						 Após a realização de todos os cálculos, o valor do for é reiniciado e a variável verificador é setada como true,
-						 * autorizando a criação dos gráficos.
-
-						i = -1;
-						verificador = true;
-
-						switch (tipoGrafico) {
-						case 10:
-							tipoGrafico = 1;
-							break;
-						case 11:
-							tipoGrafico = 2;
-							break;
-						case 12:
-							tipoGrafico = 3;
-							break;
-						case 13:
-							tipoGrafico = 4;
-							break;
-						case 14:
-							tipoGrafico = 5;
-							break;
-						case 15:
-							tipoGrafico = 6;
-							break;
-						}
-					}
-
-					// Altera os labels do gráfico.
-					linhas[0].setText(String.format("%1.2f Kcal", totalCalorias));
-					linhas[1].setText(String.format("%1.2f Kcal", mediaCalorias));
-					linhas[2].setText(String.format("%1.2f Km", distanciaTotal));
-					linhas[3].setText(String.format("%1.2f", distanciaMedia));
-					linhas[4].setText(String.format("%d", totalPassos));
-				}
-			}
-		} // for ()
-
-		// Define o nome do arquivo de saída para adição posterior ao PDF.
-		switch (tipoGrafico) {
-			case 1:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Duração).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 2:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Distância).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 3:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Calorias).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 4:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Passos).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 5:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Velocidade Média).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 6:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Ritmo Médio).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 7:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Linhas - Distância).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 8:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Linhas - Calorias).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-			case 9:
-				nomeArquivo = String.format("arquivos\\%s - %s - %s (Linhas - Passos).jpeg", atividade.getUsuario().getNome(), atividade.getExercicio(), data.replaceAll("/", "-"));
-				break;
-
-		}
-
-		try {
-			saida = new FileOutputStream(nomeArquivo);
-			// Exporta uma imagem .jpeg do gráfico.
-			ChartUtilities.writeChartAsJPEG(saida, grafico, 680, 430);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return grafico;
-} // geraGraficos()
-*/
-
 	public static void preencheGrafico(int tipoGrafico, BarChart<String, Number> grafico, Connection conexaoBD, LocalDate dataInicial, LocalDate dataFinal, String nomeCliente, Label[] linhas){
 		List<AtividadeCompleta> atividadesList1 = InsercaoAtividadeCompleta.listaAtividadesPorCliente(nomeCliente, conexaoBD);
 		List<AtividadeBasica> atividadesList2 = InsercaoAtividadeBasica.listaAtividadesPorCliente(nomeCliente, conexaoBD);
@@ -1673,87 +1502,5 @@ public static void preencheGrafico(int tipoGrafico, LineChart<String, Number> gr
 
 		return ritmoMedio;
 	} // getRitmoMedio()
-
-	/**
-	 * Realiza toda a operação de exportação dos dados para o PDF. Obtém os arquivos armazenados na pasta "arquivos" e insere no arquivo PDF.
-	 * O nome do arquivo é gerado com a hora obtida do sistema.
-	 *
-	 * @return Retorna <i>true</i> se o arquivo for gerado com sucesso, <i>false</i> caso contrário.
-	 */
-	public boolean exportaPDF(){
-		Document arquivoPDF = new Document();
-    	File folder = new File("arquivos\\"), destino;
-    	Image graficoImage;
-    	Paragraph relatorio;
-    	Alert alerta;
-    	DirectoryChooser caminhoSalvar = new DirectoryChooser();
-    	String caminhoDestino, extensao;
-    	ArquivoTexto arquivoRelatorio;
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
-
-    	// Abre a janela para escolha do destino do arquivo.
-    	caminhoSalvar.setTitle("Selecione o destino do arquivo PDF...");
-    	destino = caminhoSalvar.showDialog(null);
-    	caminhoDestino = destino.getAbsolutePath();
-
-    	try {
-    		// Cria o arquivo PDF.
-			PdfWriter writer = PdfWriter.getInstance(arquivoPDF, new FileOutputStream(caminhoDestino + File.separator +
-																						"PDF - " + LocalTime.now().format(formatter).replace(":", "-") + ".pdf"));
-
-			arquivoPDF.open();
-
-			// Percorre os arquivos da pasta.
-			for (File arquivo : folder.listFiles()){
-				extensao = arquivo.getName().substring(arquivo.getName().lastIndexOf(".")+1);
-
-				// Verifica a extensão do arquivo. Caso seja txt, é um relatório. Insere os dados do relatório no PDF e exclui os arquivos.
-				if (extensao.equals("txt")){
-					arquivoRelatorio = new ArquivoTexto();
-					arquivoRelatorio.abrir(arquivo.getAbsolutePath());
-					relatorio = new Paragraph(arquivoRelatorio.ler());
-					arquivoPDF.add(relatorio);
-					arquivo.delete();
-				}
-
-			}
-
-			for (File arquivo : folder.listFiles()){
-				extensao = arquivo.getName().substring(arquivo.getName().lastIndexOf(".")+1);
-				// Caso seja jpeg, é um gráfico. Insere as imagens no PDF e exclui os arquivos.
-				if (extensao.equals("jpeg")){
-					graficoImage = Image.getInstance("arquivos" + File.separator + arquivo.getName());
-					arquivoPDF.setPageSize(graficoImage);
-					arquivoPDF.newPage();
-					graficoImage.setAbsolutePosition(0, 0);
-					arquivoPDF.add(graficoImage);
-				}
-			}
-
-			arquivoPDF.close();
-			writer.close();
-
-			alerta = new Alert(AlertType.CONFIRMATION);
-			alerta.setTitle("SUCESSO");
-			alerta.setContentText("PDF exportado com sucesso!");
-			alerta.showAndWait();
-
-			return true;
-
-    	} catch (FileNotFoundException e) {
-    		alerta = new Alert(AlertType.ERROR);
-    		alerta.setTitle("ERRO");
-    		alerta.setContentText("Falha na criação do arquivo PDF !" );
-		} catch (DocumentException e) {
-			alerta = new Alert(AlertType.ERROR);
-			alerta.setTitle("ERRO");
-			alerta.setContentText("Erro na manipulação do PDF !");
-		} catch (IOException e) {
-			alerta = new Alert(AlertType.ERROR);
-			alerta.setTitle("ERRO");
-			alerta.setContentText("Erro na leitura dos arquivos !" );
-		}
-    	return false;
-	} // exportarPDF()
 
 } // class ManipulaDados

@@ -440,7 +440,7 @@
                            <children>
                               <BarChart fx:id="graficoColunasDuracao" prefHeight="463.0" prefWidth="685.0" title="Duração do Exercício">
                                 <xAxis>
-                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                  <CategoryAxis animated="false" label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
                                   <NumberAxis label="Duração (min)" side="LEFT" />
@@ -459,7 +459,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Distância" side="LEFT" />
+                                  <NumberAxis animated="false" label="Distância" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -475,7 +475,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Calorias" side="LEFT" />
+                                  <NumberAxis animated="false" label="Calorias" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -491,7 +491,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Passos" side="LEFT" />
+                                  <NumberAxis animated="false" label="Passos" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -504,7 +504,7 @@
                            <children>
                               <BarChart fx:id="graficoColunasVelocidade" prefHeight="463.0" prefWidth="685.0" title="Velocidade">
                                 <xAxis>
-                                  <CategoryAxis label="Data" side="BOTTOM" />
+                                  <CategoryAxis animated="false" label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
                                   <NumberAxis label="Velocidade (Km)" side="LEFT" />
@@ -523,7 +523,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Ritmos" side="LEFT" />
+                                  <NumberAxis animated="false" label="Ritmos" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -543,7 +543,6 @@
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#exportaPDF" text="Exportar PDF..." />
                   <MenuItem mnemonicParsing="false" onAction="#encerraSessao" text="Encerrar Sessão" />
                   <MenuItem mnemonicParsing="false" onAction="#sair" text="Sair" />
             </items>
@@ -686,7 +685,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Distância" side="LEFT" />
+                                  <NumberAxis animated="false" label="Distância" side="LEFT" />
                                 </yAxis>
                               </LineChart>
                            </children>
@@ -702,7 +701,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Calorias" side="LEFT" />
+                                  <NumberAxis animated="false" label="Calorias" side="LEFT" />
                                 </yAxis>
                               </LineChart>
                            </children>
@@ -718,7 +717,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Passos" side="LEFT" />
+                                  <NumberAxis animated="false" label="Passos" side="LEFT" />
                                 </yAxis>
                               </LineChart>
                            </children>
@@ -742,7 +741,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Duração (min.)" side="LEFT" />
+                                  <NumberAxis animated="false" label="Duração (min.)" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -758,7 +757,7 @@
                                   <CategoryAxis label="Distância" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Data" side="LEFT" />
+                                  <NumberAxis animated="false" label="Data" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -774,7 +773,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Calorias" side="LEFT" />
+                                  <NumberAxis animated="false" label="Calorias" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -790,7 +789,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Passos" side="LEFT" />
+                                  <NumberAxis animated="false" label="Passos" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -806,7 +805,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Velocidade (Km.)" side="LEFT" />
+                                  <NumberAxis animated="false" label="Velocidade (Km.)" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
@@ -822,7 +821,7 @@
                                   <CategoryAxis label="Data" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis label="Ritmo" side="LEFT" />
+                                  <NumberAxis animated="false" label="Ritmo" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                            </children>
